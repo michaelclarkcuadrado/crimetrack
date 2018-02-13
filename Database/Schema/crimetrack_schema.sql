@@ -34,18 +34,38 @@ CREATE TABLE crimetrack_location_types (
 	location_ID INT(11) AUTO_INCREMENT NOT NULL,
 	location_desc VARCHAR(255)  NOT NULL,
 	PRIMARY KEY(location_ID)
-)
+);
 
 CREATE TABLE crimetrack_crime_type (
-	IUCR_PK SMALLINT NOT NULL,
+	IUCR_PK SMALLINT(3) NOT NULL,
 	crime_type VARCHAR(255) NOT NULL,
-	crime_description VARCHARR(255) NOT NULL,
+	crime_description VARCHAR(255) NOT NULL,
 	PRIMARY KEY(IUCR_PK)
-)
+);
 
 CREATE TABLE crimetrack_chicago_community_areas (
-	area_id SMALLINT NOT NULL,
+	area_id SMALLINT(3) NOT NULL,
 	community_name VARCHAR(255),
 	population VARCHAR(255),
 	income VARCHAR(255)
-)
+);
+
+CREATE TABLE crimetrack_users (
+	user_id INT(11) AUTO_INCREMENT NOT NULL,
+	username VARCHAR(255) NOT NULL,
+	password_hash VARCHAR(255) NOT NULL,
+	userType ENUM("common", "admin") NOT NULL,
+	PRIMARY KEY(user_id)
+);
+
+CREATE TABLE crimetrack_user_saved_areas (
+	user_id INT(11) NOT NULL,
+	area_id SMALLINT(3) NOT NULL,
+	PRIMARY KEY(user_id, area_id)
+);
+
+CREATE TABLE crimetrack_user_saved_crime_types (
+	user_id INT(11) NOT NULL,
+	IUCR_PK SMALLINT(3) NOT NULL,
+	PRIMARY KEY(user_id, IUCR_PK)
+);
