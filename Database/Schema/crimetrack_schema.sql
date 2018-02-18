@@ -56,6 +56,7 @@ ALTER TABLE `crimetrack_crimes`
   ON UPDATE RESTRICT;
 
 # chicago crimes dataset available from data.gov, not included in repo
+# https://data.cityofchicago.org/api/views/ijzp-q8t2/rows.csv?accessType=DOWNLOAD
 LOAD DATA LOCAL INFILE '/docker-entrypoint-initdb.d/Crimes_-_2001_to_present.csv' INTO TABLE crimetrack_crimes
 FIELDS TERMINATED BY ',' OPTIONALLY ENCLOSED BY '\"' IGNORE 1 LINES;
 
