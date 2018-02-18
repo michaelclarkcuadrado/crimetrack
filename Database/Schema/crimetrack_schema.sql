@@ -57,7 +57,7 @@ ALTER TABLE `crimetrack_crimes`
 
 # chicago crimes dataset available from data.gov, not included in repo
 LOAD DATA LOCAL INFILE '/docker-entrypoint-initdb.d/Crimes_-_2001_to_present.csv' INTO TABLE crimetrack_crimes
-FIELDS TERMINATED BY ',' IGNORE 1 LINES;
+FIELDS TERMINATED BY ',' OPTIONALLY ENCLOSED BY '\"' IGNORE 1 LINES;
 
 # delete unneeded columns
 ALTER TABLE crimetrack_crimes
