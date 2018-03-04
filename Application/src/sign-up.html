@@ -1,4 +1,7 @@
 <!DOCTYPE HTML>
+<?php
+    include_once("api/config.php")
+?>
 <html>
 <head>
 
@@ -16,12 +19,18 @@
 }
 
 h2 {
-  color: #0f2723;
+    height: 50%;
+	width: 40%;
+    padding: 30px 20px;
+    position: relative;
+	left: 30%;
+  color: rgb(142, 225, 228);
+  background-color:rgb(25, 79, 80);
   font-family: 'Yantramanav', sans-serif;
   font-size: 24px;
-  font-weight: bold;
+  font-weight: 700;
   letter-spacing: 2px;
-  margin: 0;
+  margin: 10px;
   text-align: center;
   text-transform: uppercase;
 }
@@ -39,6 +48,7 @@ form{
 	left: 30%;
 	margin: 10px;
     color: rgb(142, 225, 228);
+    border-radius: .3rem;
 }
 
 body {
@@ -59,19 +69,23 @@ body {
     <form>
             <div class="form-group">
                 <label for="exampleInputName2">Username</label>
-                <input type='text' class="form-control" id="exampleInputName2" placeholder='Enter username' /><br />
+                <input type='text' class="form-control" required id="exampleInputName2" placeholder='Enter username' /><br />
             </div>
             <div class="form-group">
                 <label for="exampleInputEmail1">Email address</label>
-                <input type="email" class="form-control" id="exampleInputEmail1" placeholder="Enter valid email"><br />
+                <input type="email" class="form-control" required id="exampleInputEmail1" placeholder="Enter valid email"><br />
             </div>
             <div class="form-group">
                 <label for="exampleInputPassword3">Password</label>
-                <input type='password' class="form-control" id="exampleInputPassword3" placeholder=' Create your password' />
+                <input type='password' class="form-control" required id="exampleInputPassword3" placeholder=' Create your password' />
             </div>
 
                 <br /><br />
                 <input class="btn btn-default" type='submit' value='Create account' />
+                <br /><br />
+        <div>
+            Already have an account? <br /><a href="index.html">Sign in</a>
+        </div>
     </form>
 </body>
 </html>
