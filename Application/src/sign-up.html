@@ -1,14 +1,63 @@
 <!DOCTYPE HTML>
 <html>
-<head><title>Sign up for CrimeTrack</title></head>
+<head>
+
+<SCRIPT src="../js/jquery-1.11.3.min.js"> </SCRIPT>
+<SCRIPT src="../js/bootstrap.min.js">     </SCRIPT>
+
+<STYLE type ="text/css">
+* {
+	box-sizing: border-box;
+}
+
+h2 {
+  color: #AAA;
+  font-family: 'Yantramanav', sans-serif;
+  font-size: 24px;
+  font-weight: 100;
+  letter-spacing: 2px;
+  margin: 0;
+  text-align: center;
+  text-transform: uppercase;
+}
+
+p.signIn{
+	font-family: 'Yantramanav', sans-serif;
+	height: 250px;
+	width: 400px;
+	border: 1px solid #000000;
+	padding: 30px 20px;
+	font-size: 20px;
+	font-weight: bold;
+	text-align:center;
+	background:cyan;
+	position: relative;
+	left: 35%;
+	margin: 10px;
+}
+
+body {
+  background-color: #FFF;
+  margin: 0px;
+  padding: 50px 60px;
+}
+</STYLE>
+
+<title>Sign up for CrimeTrack</title>
+</head>
 
 <body>
+	<DIV class="container">
 	<h2>Sign Up</h2>
 	
-	Username:	<input type='text' name='username' placeholder='enter username' /> <br />
-	Email:		<input type='text' name='email' placeholder='enter valid email address' /> <br />
-	Password:	<input type='password' name='password' placeholder='create your password' /> <br />
+	<p class='signIn'>
+	Username:	<input type='text' name='username' placeholder=' Enter username' /><br /><br />
+	Email:		<input type='text' name='email' placeholder=' Enter valid email address' /><br /><br />
+	Password:	<input type='password' name='password' placeholder=' Create your password' /> 
+	
 	<br /><br />
 	<input type='submit' value='Create account' />
+	</p>
+	</DIV>
 </body>
 </html>
