@@ -30,5 +30,6 @@
 
 .copyright_footer {
     background: #1e1e1e;
-    padding: 40px 0 30px;
+    padding: 40px 0 40px;
+    border-top: 1px solid #666;
 }
