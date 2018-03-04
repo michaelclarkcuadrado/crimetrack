@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="WebServers">
+    <option name="servers">
+      <webServer id="a107a7ed-fcc0-4bb6-9ee5-50764d0875e0" name="cs10" url="http://publicgettysburg.edu/~clarmi03/crimetrack">
+        <fileTransfer host="cs10.cc.gettysburg.edu" port="222" accessType="SFTP">
+          <advancedOptions>
+            <advancedOptions dataProtectionLevel="Private" />
+          </advancedOptions>
+          <option name="port" value="222" />
+        </fileTransfer>
+      </webServer>
+    </option>
+  </component>
+</project>
