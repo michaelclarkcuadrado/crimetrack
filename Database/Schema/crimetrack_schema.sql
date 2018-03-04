@@ -104,6 +104,7 @@ ALTER TABLE crimetrack_crimes
 CREATE TABLE crimetrack_users (
   user_id       INT(11) AUTO_INCREMENT   NOT NULL,
   username      VARCHAR(255)             NOT NULL,
+  email         VARCHAR(255)             NOT NULL,
   password_hash VARCHAR(255)             NOT NULL,
   userType      ENUM ("common", "admin") NOT NULL,
   PRIMARY KEY (user_id)
