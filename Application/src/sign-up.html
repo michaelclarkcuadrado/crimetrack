@@ -2,8 +2,12 @@
 <html>
 <head>
 
-<SCRIPT src="../js/jquery-1.11.3.min.js"> </SCRIPT>
-<SCRIPT src="../js/bootstrap.min.js">     </SCRIPT>
+<META name="viewport" content="width=device-width, initial-scale=1">
+
+<LINK rel="stylesheet" type="text/css" href="vendor/bootstrap/css/bootstrap.min.css">
+
+<SCRIPT src="vendor/jquery.min.js"> </SCRIPT>
+<SCRIPT src="vendor/bootstrap/js/bootstrap.min.js">     </SCRIPT>
 
 <STYLE type ="text/css">
 * {
@@ -12,33 +16,33 @@
 }
 
 h2 {
-  color: #AAA;
+  color: #0f2723;
   font-family: 'Yantramanav', sans-serif;
   font-size: 24px;
-  font-weight: 100;
+  font-weight: bold;
   letter-spacing: 2px;
   margin: 0;
   text-align: center;
   text-transform: uppercase;
 }
 
-p.signIn{
+form{
 	font-family: 'Yantramanav', sans-serif;
 	height: 50%;
 	width: 40%;
-	border: 1px solid #000000;
 	padding: 30px 20px;
 	font-size: 20px;
 	font-weight: bold;
 	text-align:center;
-	background-color:#9EB599;
+	background-color:rgba(34, 101, 103, 0.90);
 	position: relative;
 	left: 30%;
 	margin: 10px;
+    color: rgb(142, 225, 228);
 }
 
 body {
-  background-image:url(http://farm4.staticflickr.com/3593/3372140150_392a3fbf3a_z.jpg);
+  background-image:url(static/img/signUpSkyline.jpg);
   background-size: cover;
   background-color: #FFF;
   margin: 0px;
@@ -50,17 +54,24 @@ body {
 </head>
 
 <body>
-	<DIV class="container">
+	
 	<h2>Sign Up</h2>
-	
-	<p class='signIn'>
-	Username:	<input type='text' name='username' placeholder=' Enter username' /><br /><br />
-	Email:		<input type='text' name='email' placeholder=' Enter valid email address' /><br /><br />
-	Password:	<input type='password' name='password' placeholder=' Create your password' /> 
-	
-	<br /><br />
-	<input class="btn btn-default" type='submit' value='Create account' />
-	</p>
-	</DIV>
+    <form>
+            <div class="form-group">
+                <label for="exampleInputName2">Username</label>
+                <input type='text' class="form-control" id="exampleInputName2" placeholder='Enter username' /><br />
+            </div>
+            <div class="form-group">
+                <label for="exampleInputEmail1">Email address</label>
+                <input type="email" class="form-control" id="exampleInputEmail1" placeholder="Enter valid email"><br />
+            </div>
+            <div class="form-group">
+                <label for="exampleInputPassword3">Password</label>
+                <input type='password' class="form-control" id="exampleInputPassword3" placeholder=' Create your password' />
+            </div>
+
+                <br /><br />
+                <input class="btn btn-default" type='submit' value='Create account' />
+    </form>
 </body>
 </html>
