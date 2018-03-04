@@ -1,6 +1,14 @@
 version: '2.1'
 
 services:
+ crimetrack-php:
+  build: ./Application
+  restart: always
+  volumes:
+    - ./Application/src:/var/www/html
+  ports:
+   - 80:80
+    
  crimetrack-database:
   restart: always
   build: ./Database
@@ -9,7 +17,7 @@ services:
   volumes:
    - crimetrack-db:/var/lib/mysql
 
- phpmyadmin:
+ crimetrack-phpmyadmin:
   image: phpmyadmin/phpmyadmin
   container_name: phpmyadmin
   environment:
