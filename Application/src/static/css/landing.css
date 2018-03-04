@@ -1,6 +1,34 @@
 .login_header {
-    display: inline;
+    display: inline-block;
     width: 100%;
-    z-index: 99;
+    padding-top: 10px;
+    padding-bottom: 10px;
+    padding-left: 5px;
+    padding-right: 5px;
+    background-color: maroon;
+    /*max-height: 76px;*/
+}
 
+.main {
+    background-image: url("/static/img/skyline.jpg");
+    background-size: cover;
+    width: 100%;
+    height: calc(100% - 76px);
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+.headerTitle {
+    color: white;
+    float: left;
+}
+
+.jumbotron {
+    background: rgba(233,236,239, 0.7) !important;
+}
+
+.copyright_footer {
+    background: #1e1e1e;
+    padding: 40px 0 30px;
 }
