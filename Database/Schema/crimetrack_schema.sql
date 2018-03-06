@@ -10,7 +10,7 @@ CREATE TABLE crimetrack_crimes (
   ID                   VARCHAR(255) NOT NULL,
   CASE_NUMBER          VARCHAR(255) NOT NULL,
   DATE                 VARCHAR(255) NOT NULL,
-  BLOCK                VARCHAR(255) NOT NULL,
+  STREET               VARCHAR(255) NOT NULL,
   IUCR                 VARCHAR(255) NOT NULL,
   PRIMARY_TYPE         VARCHAR(255) NOT NULL,
   DESCRIPTION          VARCHAR(255) NOT NULL,
@@ -64,6 +64,7 @@ FIELDS TERMINATED BY ',' OPTIONALLY ENCLOSED BY '\"' IGNORE 1 LINES;
 ALTER TABLE crimetrack_crimes
   DROP LOCATION,
   DROP BEAT,
+  DROP FBI_CODE,
   DROP DISTRICT,
   DROP WARD,
   DROP CASE_NUMBER,
@@ -71,6 +72,10 @@ ALTER TABLE crimetrack_crimes
   DROP Y_COORDINATE,
   DROP YEAR,
   DROP UPDATED_ON;
+
+#Update streets, strip out cross street info, index
+UPDATE crimetrack_crimes SET STREET = SUBSTR(STREET, 7);
+ALTER TABLE `crimetrack_crimes` ADD INDEX(`STREET`);
 
 -- CREATE TABLE crimetrack_location_types (
 --   location_ID   INT(11) AUTO_INCREMENT NOT NULL,
