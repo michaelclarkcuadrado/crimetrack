@@ -72,12 +72,12 @@ ALTER TABLE crimetrack_crimes
   DROP YEAR,
   DROP UPDATED_ON;
 
-CREATE TABLE crimetrack_location_types (
-  location_ID   INT(11) AUTO_INCREMENT NOT NULL,
-  location_desc VARCHAR(255)           NOT NULL,
-  PRIMARY KEY (location_ID),
-  INDEX (location_desc)
-);
+-- CREATE TABLE crimetrack_location_types (
+--   location_ID   INT(11) AUTO_INCREMENT NOT NULL,
+--   location_desc VARCHAR(255)           NOT NULL,
+--   PRIMARY KEY (location_ID),
+--   INDEX (location_desc)
+-- );
 
 CREATE TABLE crimetrack_crime_type (
   IUCR_PK           VARCHAR(10)  NOT NULL,
@@ -85,6 +85,23 @@ CREATE TABLE crimetrack_crime_type (
   crime_description VARCHAR(255) NOT NULL,
   PRIMARY KEY (IUCR_PK)
 );
+
+-- # seed locations from imported dataset
+-- INSERT INTO crimetrack_location_types (location_desc)
+--   SELECT DISTINCT LOCATION_DESCRIPTION
+--   FROM crimetrack_crimes;
+
+-- UPDATE crimetrack_crimes
+--   JOIN crimetrack_location_types
+--     ON LOCATION_DESCRIPTION = location_desc
+-- SET LOCATION_DESCRIPTION = location_ID;
+
+-- ALTER TABLE crimetrack_crimes
+--   CHANGE `LOCATION_DESCRIPTION` `LOCATION_ID` INT(11) NOT NULL;
+-- ALTER TABLE crimetrack_crimes
+--   ADD CONSTRAINT `location_2_location_type` FOREIGN KEY (`LOCATION_ID`) REFERENCES `crimetrack_location_types` (`location_ID`)
+--   ON DELETE RESTRICT
+--   ON UPDATE RESTRICT;
 
 INSERT INTO crimetrack_crime_type (IUCR_PK, crime_type, crime_description)
   SELECT DISTINCT
