@@ -1,6 +1,6 @@
 <!DOCTYPE HTML>
 <?php
-    include_once("api/config.php")
+    include_once("api/config.php");
 ?>
 <html>
 <head>
@@ -66,18 +66,18 @@ body {
 <body>
 	
 	<h2>Sign Up</h2>
-    <form>
+    <form method='POST' action="api/addUser.php">
             <div class="form-group">
-                <label for="exampleInputName2">Username</label>
-                <input type='text' class="form-control" required id="exampleInputName2" placeholder='Enter username' /><br />
+                <label for="username">Username</label>
+                <input type='text' class="form-control" required name="username" placeholder='Enter username' /><br />
             </div>
             <div class="form-group">
-                <label for="exampleInputEmail1">Email address</label>
-                <input type="email" class="form-control" required id="exampleInputEmail1" placeholder="Enter valid email"><br />
+                <label for="email">Email address</label>
+                <input type="email" class="form-control" required name="email" placeholder="Enter valid email"><br />
             </div>
             <div class="form-group">
-                <label for="exampleInputPassword3">Password</label>
-                <input type='password' class="form-control" required id="exampleInputPassword3" placeholder=' Create your password' />
+                <label for="password">Password</label>
+                <input type='password' class="form-control" required name="password" placeholder=' Create your password' />
             </div>
 
                 <br /><br />
