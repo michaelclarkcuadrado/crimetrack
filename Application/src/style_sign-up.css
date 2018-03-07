@@ -1,0 +1,44 @@
+* {
+	box-sizing: border-box;
+}
+
+h2 {
+  height: 50%;
+  width: 40%;
+  padding: 30px 20px;
+  position: relative;
+	left: 30%;
+  color: rgb(142, 225, 228);
+  background-color:rgb(25, 79, 80);
+  font-family: 'Yantramanav', sans-serif;
+  font-size: 24px;
+  font-weight: 700;
+  letter-spacing: 2px;
+  margin: 10px;
+  text-align: center;
+  text-transform: uppercase;
+}
+
+form, h3{
+	font-family: 'Yantramanav', sans-serif;
+	height: 50%;
+	width: 40%;
+	padding: 30px 20px;
+	font-size: 20px;
+	font-weight: bold;
+	text-align:center;
+	background-color:rgba(34, 101, 103, 0.90);
+	position: relative;
+	left: 30%;
+	margin: 10px;
+  color: rgb(142, 225, 228);
+  border-radius: .3rem;
+}
+
+body {
+  background-image:url(static/img/signUpSkyline.jpg);
+  background-size: cover;
+  background-color: #FFF;
+  margin: 0px;
+  padding: 50px 60px;
+}
