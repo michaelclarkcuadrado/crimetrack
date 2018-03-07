@@ -10,7 +10,7 @@
 }
 
 .main {
-    background-image: url("/static/img/skyline.jpg");
+    background-image: url("../img/skyline.jpg");
     background-size: cover;
     width: 100%;
     height: calc(100% - 76px);

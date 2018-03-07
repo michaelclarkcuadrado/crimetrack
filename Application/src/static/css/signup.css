@@ -36,7 +36,7 @@ form, h3{
 }
 
 body {
-  background-image:url(static/img/signUpSkyline.jpg);
+  background-image:url(../img/signUpSkyline.jpg);
   background-size: cover;
   background-color: #FFF;
   margin: 0px;
