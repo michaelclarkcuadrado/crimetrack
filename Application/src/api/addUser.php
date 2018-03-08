@@ -1,4 +1,8 @@
 <?php
+	/*
+	 * Tracy Tang
+	 * This file takes the user's input on the sign-up page and insert into the crimetrack_users table in the database.
+	 */
 	include_once('config.php');
 
 	$username = $_POST['username'];
