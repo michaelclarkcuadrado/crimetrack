@@ -1,18 +1,17 @@
 <!DOCTYPE HTML>
 <?php
-
+	//code to send email to user
 
 	$email   = $_POST['emailSend'];   
 	$name    = $_POST['usernameSend'];    
 
-	$content = $_POST['taContent']; //this should be deleted if possible, might need it for the mail function though
 
-	$to      = "boucbe01@gettysburg.edu";
+	$to      = $_POST['emailSend'];
 	$subject = "Comment from $name";
 
 	$header  = "From: $name <$email>\r\n";
-
-	$result  = mail($to, $subject, $content, $header);
+	//need a field content which will hold the users password or a system generated password
+	$result  = mail($to, $subject, $header);
 ?>
 
 <HTML>
@@ -21,7 +20,7 @@
 	</HEAD>
 
 	<BODY>
-
+		<!--informs user that the process went through -->
 		<H2>Here is your password.</H2>
 		<P>Your name: <?php echo $name;  ?></P>
 		<P>Your mail: <?php echo $email; ?></P>
