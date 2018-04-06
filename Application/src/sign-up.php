@@ -1,3 +1,13 @@
+<?php
+	include_once('config.php');
+	include("api/addUser.php");
+
+	$op = $_GET['op'];
+	if ($op == 'add') {
+		addUser($_POST);
+	}
+?>
+
 <!DOCTYPE HTML>
 <!--Tracy Tang-->
 <!--This is the sign-up page which requires users to input username, email and password-->
@@ -13,11 +23,19 @@
 <SCRIPT src="vendor/bootstrap/js/bootstrap.min.js">     </SCRIPT>
 
 <title>Sign up for CrimeTrack</title>
+<!--
+<script language="JavaScript">
+    function validate() {
+        var uemail = document.signUp.email.value;
+        return true;
+    }
+</script>
+-->
 </head>
 
 <body>
 	<h2>Sign Up</h2>
-    <form method='POST' action="api/addUser.php">
+    <form name="signUp" method='POST' action="sign-up.php?op=add">
             <div class="form-group">
                 <label for="username">Username</label>
                 <input type='text' class="form-control" required name="username" placeholder='Enter username' /><br />

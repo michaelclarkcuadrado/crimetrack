@@ -4,28 +4,34 @@
 	 * This file takes the user's input on the sign-up page and insert into the crimetrack_users table in the database.
 	 */
 	include_once('config.php');
+	
+	function addUser($data) {
+		global $db;
 
-	$username = $_POST['username'];
-	$email = $_POST['email'];
-	$password = password_hash($_POST['password'], PASSWORD_DEFAULT);
+		$username = $data['username'];
+		$email = $data['email'];
+		$password = MD5($data['password']);
+	
+		$msg = "";
 
-	$add = "INSERT INTO `crimetrack_users` (`username`, `email`, `password_hash`, `userType`) VALUE('$username', '$email', '$password', 'common');";
-
-	$result = $db->query($add);
-
-	if($result == FALSE) {
-        die("An unknown error occurred.");
+		$checkUname = "SELECT * FROM `crimetrack_users` WHERE username = '$username'";
+    	$unameResult = $db->query($checkUname);
+		if($unameResult->rowCount() != 0) {
+			$msg = "Username already exists.";
+			//print $msg;
+			echo "<script type='text/javascript'>alert('$msg');</script>";
+		}
+		else {
+			$add = "INSERT INTO `crimetrack_users` (`username`, `email`, `password_hash`, `userType`) VALUE('$username', '$email', '$password', 'common');";
+			$result = $db->query($add);
+	
+			if($result == FALSE) {
+				die("An unknown error occurred.");
+			}
+			header("Location: sign-up-success.html");
+		}
 	}
+
 ?>
 
-<html>
-<head>
-<link rel="stylesheet" type="text/css" href="../static/css/style_sign-up.css">
 
-<title>Sign up successfully</title>
-</head>
-<body>
-<h3>You have successfully signed up.</h3><br /><br />
-      <a href="../index.html">Click here to login</a></h2>
-</body>
-</html>
