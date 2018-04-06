@@ -23,14 +23,20 @@
 <SCRIPT src="vendor/bootstrap/js/bootstrap.min.js">     </SCRIPT>
 
 <title>Sign up for CrimeTrack</title>
-<!--
+
 <script language="JavaScript">
     function validate() {
         var uemail = document.signUp.email.value;
-        return true;
+        if (uemail.includes("@") && uemail.includes(".")) {
+            return true;
+        }
+        else {
+            alert("Please input valid email address.");
+            return false;
+        }
     }
 </script>
--->
+
 </head>
 
 <body>
