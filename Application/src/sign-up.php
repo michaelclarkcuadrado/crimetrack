@@ -1,6 +1,6 @@
 <?php
 	include_once('config.php');
-	include("api/addUser.php");
+	include('api/addUser.php');
 
 	$op = $_GET['op'];
 	if ($op == 'add') {
@@ -8,7 +8,6 @@
 	}
 ?>
 
-<!DOCTYPE HTML>
 <!--Tracy Tang-->
 <!--This is the sign-up page which requires users to input username, email and password-->
 <html>
@@ -41,7 +40,7 @@
 
 <body>
 	<h2>Sign Up</h2>
-    <form name="signUp" method='POST' action="sign-up.php?op=add">
+    <form name="signUp" method='POST' action="sign-up.php?op=add" onsubmit="return validate()">
             <div class="form-group">
                 <label for="username">Username</label>
                 <input type='text' class="form-control" required name="username" placeholder='Enter username' /><br />

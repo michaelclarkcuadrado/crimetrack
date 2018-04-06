@@ -17,7 +17,7 @@
 		$checkUname = "SELECT * FROM `crimetrack_users` WHERE username = '$username'";
 		$unameResult = $db->query($checkUname);
 		if($unameResult == FALSE) {
-			die("Database refused to respnse.")
+			die("Database refused to respnse.");
 		}
 		if($unameResult->rowCount() != 0) {
 			$msg = "Username already exists.";
