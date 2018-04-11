@@ -1,9 +1,12 @@
-update password .php
-
 <!DOCTYPE HTML>
 <?php
-	//code to send email to user
+	//code to update password in the database and produce an error if submission is incorrect
 
+    /*To do
+        <!--Check if newP and newP2 match -->
+        <!--Check if oldP matchs database -->
+        <!--Update database with new password if that's true -->
+    */
 	$email   = $_POST['email'];   
 	$name    = $_POST['username'];    
 
@@ -11,23 +14,26 @@ update password .php
     $oldP = $_POST['oldPassword'];
     $newP = $_POST['newPassword'];
     $newP2 = $_POST['newPassword2'];
-	
+    //Need to get old password from data base to compare
+    /*
+    if($oldP != oldPassword)
+    {
+        $msg = "Error, this does not match your current password"
+        echo "<script type='text/javascript'>alert('$msg');</script>";
+    }
+    */
+    if($newP != $newP2)
+    {
+        $msg = "Error, new password does not match confirmation."
+        echo "<script type='text/javascript'>alert('$msg');</script>";
+    }
+    //do i need to do something on top of these messages if it fails?
 ?>
-<!--Check if newP and newP2 match -->
-<!--Check if oldP matchs database -->
-<!--Update database with new password if that's true -->
+
 <HTML>
 	<HEAD>
     <TITLE>Retrieve Password</TITLE>
-    <!-- 
-        <SCRIPT>
-            if(newP!=newP2)
-            {
-                return "Error";
-            }
-        </SCRIPT>
-        </HEAD>
-    -->
+    
 	<BODY>
 		<!--informs user that the process went through, MAYBE I should automatically send back to landing page if it works -->
         <H2>Your password has been reset.</H2>
