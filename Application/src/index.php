@@ -1,3 +1,13 @@
+<?php
+	include_once('config.php');
+	include('api/auth.php');
+
+	$op = $_GET['op'];
+	if ($op == 'auth') {
+		auth($_POST);
+	}
+?>
+
 <html>
 <head>
     <title>CrimeTrack | Mapping Chicago's crime</title>
@@ -11,14 +21,14 @@
         <h1 class="headerTitle">CrimeTrack</h1>
         <div class="subtitle_container"><h5 class="headerTitle">Chicago</h5></div>
         <div style="float:right; display: flex; line-height: 50px" class="login_box">
-            <form method="post" style="margin-bottom: 0; margin-right: 5px" class="form-inline" action="api/auth.php">
+            <form method="post" style="margin-bottom: 0; margin-right: 5px" class="form-inline" action="index.php?op=auth">
             <div class="form-group" style="margin-right: 5px">
                 <!--<label for="username_input">Username</label>-->
-                <input type="text" class="form-control" id="username_input" name="login_username" placeholder="Username">
+                <input type="text" class="form-control" id="username_input" required name="login_username" placeholder="Username">
             </div>
             <div class="form-group" style="display: block; margin-right: 5px">
                 <!--<label for="password_input">Password</label>-->
-                <input type="password" class="form-control" id="password_input" name="login_password" placeholder="Password">
+                <input type="password" class="form-control" id="password_input" required name="login_password" placeholder="Password">
                 <small class="form-text text-muted" style="margin: 0 5px; position: absolute; line-height: 20px"><a style="color:white" href="forgotpassword.html">Forgot Password?</a></small>
             </div>
             <button type="submit" class="btn btn-primary">Log In</button>
