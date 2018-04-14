@@ -38,7 +38,7 @@
           						<a class="dropdown-item" href="#">Edit Profile</a>
           						<a class="dropdown-item" href="#">View Favorites</a>
           						<div class="dropdown-divider"></div>
-          						<a class="dropdown-item" href="index.html">Log out</a>
+          						<a class="dropdown-item" href="index.php">Log out</a>
         					</div>
       					</li>
 					</ul>

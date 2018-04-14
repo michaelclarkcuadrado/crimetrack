@@ -58,7 +58,7 @@
                 <input class="btn btn-default" type='submit' value='Create account' />
                 <br /><br />
         <div>
-            Already have an account? <br /><a href="index.html">Sign in</a>
+            Already have an account? <br /><a href="index.php">Sign in</a>
         </div>
     </form>
 </body>
