@@ -2,10 +2,13 @@
 	include_once('config.php');
 	include('api/auth.php');
 
+	$isFinishedSignup = false;
 	$op = $_GET['op'];
 	if ($op == 'auth') {
-		auth($_POST);
-	}
+        auth($_POST);
+	} elseif ($op == 'signupsuccess'){
+        $isFinishedSignup = true;
+    }
 ?>
 
 <html>
@@ -22,9 +25,10 @@
         <div class="subtitle_container"><h5 class="headerTitle">Chicago</h5></div>
         <div style="float:right; display: flex; line-height: 50px" class="login_box">
             <form method="post" style="margin-bottom: 0; margin-right: 5px" class="form-inline" action="index.php?op=auth">
-            <div class="form-group" style="margin-right: 5px">
+            <div class="form-group" style="display: block;margin-right: 5px">
                 <!--<label for="username_input">Username</label>-->
                 <input type="text" class="form-control" id="username_input" required name="login_username" placeholder="Username">
+                <small class="form-text" style="margin: 0 5px; position: absolute; line-height: 20px; color: white"><?php echo ($isFinishedSignup ? "You have successfully signed up." : "")?></small>
             </div>
             <div class="form-group" style="display: block; margin-right: 5px">
                 <!--<label for="password_input">Password</label>-->

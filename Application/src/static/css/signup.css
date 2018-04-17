@@ -8,9 +8,8 @@
 }
 
 h2 {
-    height: 40%;
     width: 40%;
-    padding: 30px 20px;
+    padding: 15px 15px;
     position: relative;
     left: 30%;
     color: rgb(142, 225, 228);
@@ -27,7 +26,6 @@ h2 {
 form,
 h3 {
     font-family: 'Yantramanav', sans-serif;
-    height: 50%;
     width: 40%;
     padding: 30px 20px;
     font-size: 20px;

@@ -30,7 +30,7 @@
 			if($result == FALSE) {
 				die("An unknown error occurred.");
 			}
-			header("Location: sign-up-success.html");
+			header("Location: ./?op=signupsuccess");
 		}
 	}
 
