@@ -1,3 +1,8 @@
+<?php 
+  session_start();
+  $uid = $_SESSION['uid'];
+?>
+
 <html>
 <head>
     <title>CrimeTrack Home</title>

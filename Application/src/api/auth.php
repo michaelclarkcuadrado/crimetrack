@@ -8,6 +8,7 @@
 require_once 'config.php';
 
 function auth($data) {
+	session_start();
 	global $db;
 
 	$username = $data['login_username'];
@@ -29,7 +30,7 @@ function auth($data) {
 		$passResult = $db->query($checkPass);
 
 		if($passResult == FALSE) {
-			die("Database refused to respnse.");
+			die("Database refused to respond.");
 		}
 		if($passResult->rowCount() == 0) {
 			$msg = "Incorrect password.";
@@ -37,6 +38,11 @@ function auth($data) {
 		}
 		else{
 			if(isset($username) && isset($password)){
+				$getUID = "SELECT user_id FROM `crimetrack_users` WHERE username = '$username'"; 
+				$uid = $db->query($getUID); 
+				$uid = $uid->fetch(PDO::FETCH_ASSOC); 
+				$uid = $uid['user_id'];
+				$_SESSION["uid"] = $uid; 
 				header("Location: home.php?username=$username");
 			} else {
     			die("<script>location.href = '/'</script>");
