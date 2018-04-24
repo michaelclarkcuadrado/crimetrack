@@ -1,5 +1,8 @@
 <!DOCTYPE HTML>
 <?php
+	include_once('config.php');
+	//does this connect to database?
+
 	//function found online at http://codepad.org/UL8k4aYK; works with program now
 	function randomPassword() {
 		$alphabet = "abcdefghijklmnopqrstuwxyzABCDEFGHIJKLMNOPQRSTUWXYZ0123456789";
@@ -20,10 +23,11 @@
 	$name    = $_POST['usernameSend'];    
 	
 	//code to check if user is in database
-	session_start();
-	global $db;
+	
 	$checkUname = "SELECT * FROM `crimetrack_users` WHERE username = '$name'";
-	$unameResult = $db->query($checkUname);
+	echo "pre query1";
+	$unameResult = $db->query($checkUname);//!!!!!!!!!!!!This is where it breaks idk why its same as Trishs!!!!!!!!!!!!!!!!!!!!
+	echo "we made it";
 	if($unameResult == FALSE) {
 		die("Database refused to respnse.");
 	}
@@ -32,21 +36,23 @@
 		echo "<script type='text/javascript'>alert('$msg');</script>";
 	}
 	else{
+		echo "tryna get uid";
 		$getUID = "SELECT user_id FROM `crimetrack_users` WHERE username = '$name'";
 		$uid = $db->query($getUID);
 	}
+	
 
 	$to      = $_POST['emailSend'];
 	$subject = "Password for $name";
-
 	$password = randomPassword();
 	
+	echo "at last query";
 	$din = "UPDATE crimetrack_users"."SET password_hash = $password WHERE user_id=$getUID";
 	$db->query($din);
-	//UPDATE crimetrack_users SET password_hash = "" WHERE user_id=
+	echo "through query:)";
 	
 	
-	$content  = "Password for $name <$email>. $password \r \n"; //link to changePassword
+	$content  = "Password for $name <$email>. $password. \r \n http://cs.gettysburg.edu/~boucbe01/cs360_s18/crimeTest/changePassword.html \n"; // update link to changePassword
 	$result  = mail($to, $subject, $content);
 ?>
 
@@ -60,6 +66,5 @@
 		<H2>Here is your password.</H2>
 		<P>Your name: <?php echo $name;  ?></P>
 		<P>Your mail: <?php echo $email; ?></P>
-		<!--Retrieve password from database or generate temporary password and update password in database -->
 	</BODY>
 </HTML>

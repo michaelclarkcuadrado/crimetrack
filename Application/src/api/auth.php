@@ -17,7 +17,7 @@ function auth($data) {
 	$msg = "";
 
 	$checkUname = "SELECT * FROM `crimetrack_users` WHERE username = '$username'";
-	$unameResult = $db->query($checkUname);
+	$unameResult = $db->query($checkUname); //This is where it breaks,cant figure out why i copied trishs code	!!!!!!!!!!!!!!!!!!!!!!!!!!!
 	if($unameResult == FALSE) {
 		die("Database refused to respnse.");
 	}

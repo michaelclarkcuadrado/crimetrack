@@ -1,11 +1,14 @@
 <!DOCTYPE HTML>
 <?php
+    include_once('config.php');
 	//code to update password in the database and produce an error if submission is incorrect
 
     /*To do
+        <!--See if I should use auth.php for this -->
         <!--Check if newP and newP2 match -->
         <!--Check if oldP matchs database -->
-        <!--Update database with new password if that's true -->
+        <!--Update database with new password if that's true
+        update with uid not username -->
     */
 	$email   = $_POST['email'];   
 	$name    = $_POST['username'];    
@@ -22,12 +25,20 @@
         echo "<script type='text/javascript'>alert('$msg');</script>";
     }
     */
+
+    //do i need to do something on top of these messages if it fails?
     if($newP != $newP2)
     {
         $msg = "Error, new password does not match confirmation."
         echo "<script type='text/javascript'>alert('$msg');</script>";
     }
-    //do i need to do something on top of these messages if it fails?
+    else{
+        $din = "UPDATE crimetrack_users"."SET password_hash = $newP WHERE usernaem=$name";
+	    $db->query($din);
+    }
+    
+    
+
 ?>
 
 <HTML>
