@@ -16,7 +16,7 @@
         <h1 class="headerTitle">CrimeTrack</h1>
         <div class="subtitle_container"><h5 class="headerTitle">Chicago</h5></div>
         <div style="float:right; display: flex; line-height: 23px" class="login_box">
-			<nav class="navbar navbar-expand-lg navbar-dark" style="background-color: maroon; font-weight: 700; font-size: 17px;">
+			<nav class="navbar navbar-expand-lg navbar-dark" style="font-weight: 700; font-size: 17px;">
 				<button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
     			<span class="navbar-toggler-icon"></span>
   				</button>

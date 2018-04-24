@@ -24,7 +24,26 @@
     <div class="login_header m-shadow--4dp">
         <h1 class="headerTitle">CrimeTrack</h1>
         <div class="subtitle_container"><h5 class="headerTitle">Chicago</h5></div>
-        <div style="float:right; display: flex; line-height: 50px" class="login_box">
+        <nav class="navbar navbar-expand-lg navbar-dark" style="float:right; font-weight: 700; font-size: 17px;">
+			<button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+    		    <span class="navbar-toggler-icon"></span>
+  			</button>
+  			<div class="collapse navbar-collapse" id="navbarSupportedContent" style="margin: 0 5px">
+    			<ul class="navbar-nav mr-auto">
+					<li class="nav-item active"><a class="nav-link" href="#">Home <span class="sr-only">(current)</span></a></li>
+      				<li class="nav-item"><a class="nav-link" href="#">Crimes</a></li>
+					<li class="nav-item"><a class="nav-link" href="#">Community Areas</a></li>
+					<li class="nav-item"><a class="nav-link" href="#">About Us</a></li>
+					<form class="form-inline ml-4 my-2 my-lg-0">
+      					<input class="form-control mr-sm-2" type="search" placeholder="Crime type / Location" aria-label="Search">
+      					<button class="btn btn-danger my-2 my-sm-0" type="submit">Search</button>
+    				</form>
+				</ul>
+			</div>
+		</nav>
+    </div>
+    <div style="background-color: maroon;" class="login_header m-shadow--4dp">  
+        <div style="margin-bottom: 10; margin-right: 20px; float:right; display: flex; line-height: 50px" class="login_box">
             <form method="post" style="margin-bottom: 0; margin-right: 5px" class="form-inline" action="index.php?op=auth">
             <div class="form-group" style="display: block;margin-right: 5px">
                 <!--<label for="username_input">Username</label>-->
