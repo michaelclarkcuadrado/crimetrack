@@ -31,8 +31,8 @@
   			<div class="collapse navbar-collapse" id="navbarSupportedContent" style="margin: 0 5px">
     			<ul class="navbar-nav mr-auto">
 					<li class="nav-item active"><a class="nav-link" href="#">Home <span class="sr-only">(current)</span></a></li>
-      				<li class="nav-item"><a class="nav-link" href="#">Crimes</a></li>
-					<li class="nav-item"><a class="nav-link" href="#">Community Areas</a></li>
+      				<li class="nav-item"><a class="nav-link" href="crimeType.php">Crimes</a></li>
+					<li class="nav-item"><a class="nav-link" href="communityArea.php">Community Areas</a></li>
 					<li class="nav-item"><a class="nav-link" href="#">About Us</a></li>
 					<form class="form-inline ml-4 my-2 my-lg-0">
       					<input class="form-control mr-sm-2" type="search" placeholder="Crime type / Location" aria-label="Search">
