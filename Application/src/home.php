@@ -1,6 +1,7 @@
 <?php 
   session_start();
   $uid = $_SESSION['uid'];
+  $username = $_SESSION['username'];
 ?>
 
 <html>
@@ -35,12 +36,12 @@
         					<a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
           						Hello, 
                 				<?php
-									$username = $_GET['username'];
+									#$username = $_GET['username'];
 									echo $username;
 								?>
         					</a>
         					<div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown">
-          						<a class="dropdown-item" href="#">Edit Profile</a>
+          						<a class="dropdown-item" href="editProfile.php">Edit Profile</a>
           						<a class="dropdown-item" href="#">View Favorites</a>
           						<div class="dropdown-divider"></div>
           						<a class="dropdown-item" href="api/logout.php">Log out</a>

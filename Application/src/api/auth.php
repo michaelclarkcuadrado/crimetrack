@@ -42,8 +42,9 @@ function auth($data) {
 				$uid = $db->query($getUID); 
 				$uid = $uid->fetch(PDO::FETCH_ASSOC); 
 				$uid = $uid['user_id'];
-				$_SESSION["uid"] = $uid; 
-				header("Location: home.php?username=$username");
+				$_SESSION["uid"] = $uid;
+				$_SESSION["username"] = $username; 
+				header("Location: home.php");
 			} else {
     			die("<script>location.href = '/'</script>");
 			}
