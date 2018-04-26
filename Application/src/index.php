@@ -6,7 +6,7 @@
 	$op = $_GET['op'];
 	if ($op == 'auth') {
         auth($_POST); 
-        die(); 
+        #die(); 
 	} elseif ($op == 'signupsuccess'){
         $isFinishedSignup = true;
     }

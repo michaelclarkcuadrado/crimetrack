@@ -26,6 +26,20 @@
 
 <title>Edit Profile</title>
 
+<script language="JavaScript">
+    function confirm() {
+        var newPass = document.changePassword.newPassword.value;
+        var confirmPass = document.changePassword.confirmPassword.value;
+        if (newPass == confirmPass) {
+            return true;
+        }
+        else {
+            alert("Please input the same password.");
+            return false;
+        }
+    }
+</script>
+
 </head>
 
 <body>
@@ -39,7 +53,7 @@
     </form>
     <br /><br />
     <h2>Change Password</h2>
-    <form name="changePassword" method='POST' action="editProfile.php?op=password">
+    <form name="changePassword" method='POST' action="editProfile.php?op=password" onSubmit="return confirm()">
         <div class="form-group">
             <label for="password">Old Password</label>
             <input type="password" class="form-control" required name="oldPassword" placeholder="Enter your old password"><br /><br/>
@@ -49,12 +63,15 @@
             <input type="password" class="form-control" required name="newPassword" placeholder="Enter your new password"><br /><br/>
         </div>
         <div class="form-group">
-            <label for="password">Reenter New Password</label>
+            <label for="password">Confirm New Password</label>
             <input type="password" class="form-control" required name="confirmPassword" placeholder="Confirm your new password"><br />
         </div>
-        <br /><br />
+        <br />
         <input class="btn btn-default" type='submit' value='Change Password' />
         <br /><br />
+        <div>
+            <a href="home.php">Go back to Home Page</a>
+        </div>
     </form>
 </body>
 </html>

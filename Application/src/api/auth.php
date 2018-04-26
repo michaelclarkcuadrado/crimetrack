@@ -26,13 +26,14 @@ function auth($data) {
 		echo "<script type='text/javascript'>alert('$msg');</script>";
 	}
 	else{
-		$checkPass = "SELECT * FROM `crimetrack_users` WHERE password_hash = '$password'";
+		$checkPass = "SELECT password_hash FROM `crimetrack_users` WHERE username = '$username'";
 		$passResult = $db->query($checkPass);
-
 		if($passResult == FALSE) {
 			die("Database refused to respond.");
 		}
-		if($passResult->rowCount() == 0) {
+		$pass = $passResult->fetch(PDO::FETCH_ASSOC); 
+        $pass = $pass['password_hash'];
+		if($pass != $password) {
 			$msg = "Incorrect password.";
 			echo "<script type='text/javascript'>alert('$msg');</script>";
 		}
