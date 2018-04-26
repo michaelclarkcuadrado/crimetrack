@@ -7,8 +7,8 @@
  */
 $host = "ada.cc.gettysburg.edu";
 $dbase = "crime_s18";
-$user = "";
-$pass = "";
+$user = "clarmi03";
+$pass = "Toaster10!";
 
 try{
 	$db = new PDO("mysql:host=$host;dbname=$dbase", $user, $pass);

@@ -1,5 +1,5 @@
 <?php
-    include_once('config.php');
+    include_once('api/config.php');
     include('api/edit.php');
     session_start();
     $uid = $_SESSION['uid'];
@@ -30,7 +30,7 @@
     function confirm() {
         var newPass = document.changePassword.newPassword.value;
         var confirmPass = document.changePassword.confirmPassword.value;
-        if (newPass == confirmPass) {
+        if (newPass === confirmPass) {
             return true;
         }
         else {

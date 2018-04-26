@@ -1,0 +1,42 @@
+.login_header {
+    display: inline-block;
+    width: 100%;
+    padding-top: 10px;
+    padding-bottom: 10px;
+    padding-left: 5px;
+    padding-right: 5px;
+    background-color: #1e1e1e;
+    /*max-height: 76px;*/
+}
+
+#main {
+    background-size: cover;
+    width: 100%;
+    height: calc(100% - 76px);
+    display: flex;
+}
+
+.sidebar{
+    overflow: scroll;
+    width: 20em;
+    text-wrap: normal;
+}
+
+.subtext{
+    font-size: x-small;
+}
+
+.headerTitle {
+    color: white;
+    float: left;
+}
+
+.jumbotron {
+    background: rgba(233, 236, 239, 0.7) !important;
+}
+
+.copyright_footer {
+    background: #1e1e1e;
+    padding: 40px 0 40px;
+    border-top: 1px solid #666;
+}

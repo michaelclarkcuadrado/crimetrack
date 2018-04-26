@@ -15,7 +15,15 @@ while($row = $result->fetch(PDO::FETCH_ASSOC)){
     if(!isset($output[$row['crime_type']])){
         $output[$row['crime_type']] = array();
     }
-    $output[$row['crime_type']][$row['crime_description']] = $row['IUCR_PK'];
+    $row['IUCR_PK'] = intval($row['IUCR_PK']);
+    $output[$row['crime_type']][$row['IUCR_PK']] = $row['crime_description'];
 }
 
-echo json_encode($output);
+//transform to array
+$newOutput = array();
+foreach($output as $name => $item){
+    $obj = array('name' => $name, 'subcrimes' => $item, 'isSelected' => false);
+    array_push($newOutput, $obj);
+}
+
+echo json_encode($newOutput);
