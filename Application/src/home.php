@@ -67,7 +67,7 @@ $uid = $_SESSION['uid'];
             </li>
         </ul>
     </div>
-    <div>
+    <div id="statisticsPanel">
         SELECTED NEIGHBORHOOD I.D.S:
         <span v-for="id in neighborhoodSelections">
             {{id}}
@@ -77,6 +77,46 @@ $uid = $_SESSION['uid'];
         <span v-for="id in crimeTypeSelections">
             {{id}}
         </span>
+        <div>
+            <select >
+                <option>
+                    January
+                </option>
+                <option>
+                    February
+                </option>
+                <option>
+                    March
+                </option>
+                <option>
+                    April
+                </option>
+                <option>
+                    May
+                </option>
+                <option>
+                    June
+                </option>
+                <option>
+                    July
+                </option>
+                <option>
+                    August
+                </option>
+                <option>
+                    September
+                </option>
+                <option>
+                    October
+                </option>
+                <option>
+                    November
+                </option>
+                <option>
+                    December
+                </option>
+            </select>
+        </div>
     </div>
 </div>
 <div class="copyright_footer">
@@ -110,7 +150,14 @@ $uid = $_SESSION['uid'];
             },
             toggleCrimeTypeSelection: function(crimeType){
                 if(crimeType.isSelected){
-                    //TODO ARRAY DIFFERENCE HERE
+                    for(var subcrime in crimeType.subcrimes){
+                        console.log(subcrime);
+                       if(this.crimeTypeSelections.includes(subcrime)){
+                           this.crimeTypeSelections = this.crimeTypeSelections.filter(function(val){
+                               return val !== subcrime;
+                           });
+                       }
+                    }
                 } else {
                     for(var subcrime in crimeType.subcrimes){
                         this.crimeTypeSelections.push(subcrime);
