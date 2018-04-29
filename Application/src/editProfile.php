@@ -4,11 +4,7 @@
     session_start();
     $uid = $_SESSION['uid'];
 
-	$op = $_GET['op'];
-	if ($op == 'username') {
-		editUname($_POST);
-    }
-    elseif ($op == 'password') {
+    if ($op == 'password') {
         changePass($_POST);
     }
 ?>
@@ -43,15 +39,6 @@
 </head>
 
 <body>
-	<h2>Edit Username</h2>
-    <form name="editUsername" method='POST' action="editProfile.php?op=username">
-        <div class="form-group">
-            <label for="username">Username</label>
-            <input type='text' class="form-control" required name="username" placeholder='Enter new username' /><br />
-        </div>
-        <input class="btn btn-default" type='submit' value='Save New Username' />
-    </form>
-    <br /><br />
     <h2>Change Password</h2>
     <form name="changePassword" method='POST' action="editProfile.php?op=password" onSubmit="return confirm()">
         <div class="form-group">
