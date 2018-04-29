@@ -16,6 +16,10 @@
     display: flex;
 }
 
+#statisticsPanel{
+    /*display: flex;*/
+}
+
 .sidebar{
     overflow: scroll;
     width: 20em;

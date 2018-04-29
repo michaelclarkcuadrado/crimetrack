@@ -15,7 +15,7 @@ while($row = $result->fetch(PDO::FETCH_ASSOC)){
     if(!isset($output[$row['crime_type']])){
         $output[$row['crime_type']] = array();
     }
-    $row['IUCR_PK'] = intval($row['IUCR_PK']);
+//    $row['IUCR_PK'] = intval($row['IUCR_PK']);
     $output[$row['crime_type']][$row['IUCR_PK']] = $row['crime_description'];
 }
 
