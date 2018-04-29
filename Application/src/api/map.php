@@ -3,7 +3,8 @@
 <!--To DO:
 1 use proper img src
 2 determine whether to run as a function w/in home or not
-3 
+3 set as a height
+4 the header thing is declared but make it work
 
 -->
 <img src = "http://cs.gettysburg.edu/~boucbe01/cs360_s18/neighborhoods.jpg">
