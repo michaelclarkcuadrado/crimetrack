@@ -78,6 +78,7 @@ ALTER TABLE `crimetrack_crimes` ADD `native_date` DATETIME NOT NULL;
 UPDATE `crimetrack_crimes` SET `native_date` = STR_TO_DATE(DATE, '%c/%d/%Y %r');
 ALTER TABLE `crimetrack_crimes` DROP `DATE`;
 ALTER TABLE `crimetrack_crimes` CHANGE `native_date` `DATE` DATETIME NOT NULL;
+ALTER TABLE `crimetrack_crimes` ADD INDEX(`DATE`);
 
 #Update streets, strip out cross street info, index
 UPDATE crimetrack_crimes SET STREET = SUBSTR(STREET, 7);

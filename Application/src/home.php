@@ -25,11 +25,7 @@ $uid = $_SESSION['uid'];
             <div class="collapse navbar-collapse" id="navbarSupportedContent" style="margin-bottom: 0; margin-right: 10px">
                 <ul class="navbar-nav mr-auto">
                     <li class="nav-item active"><a class="nav-link" href="#">Home <span class="sr-only">(current)</span></a></li>
-                    <li class="nav-item"><a class="nav-link" href="#">About Us</a></li>
-                    <form class="form-inline ml-4 my-2 my-lg-0">
-                        <input class="form-control mr-sm-2" type="search" placeholder="Crime type / Location" aria-label="Search">
-                        <button class="btn btn-danger my-2 my-sm-0" type="submit">Search</button>
-                    </form>
+                    <li class="nav-item"><a class="nav-link" href="AboutUs.html">About Us</a></li>
                     <span class="navbar-text" style="font-size: 25px;">&emsp;|&emsp;</span>
                     <li class="nav-item dropdown">
                         <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
@@ -37,7 +33,6 @@ $uid = $_SESSION['uid'];
                         </a>
                         <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown">
                             <a class="dropdown-item" href="editProfile.php">Edit Profile</a>
-                            <a class="dropdown-item" href="#">View Favorites</a>
                             <div class="dropdown-divider"></div>
                             <a class="dropdown-item" href="api/logout.php">Log out</a>
                         </div>
