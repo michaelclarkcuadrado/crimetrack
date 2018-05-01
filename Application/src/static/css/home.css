@@ -16,14 +16,25 @@
     display: flex;
 }
 
+#loadingScreen{
+    position: fixed;
+    display: block;
+    width: 100%;
+    height: 100%;
+    top: 0;
+    right: 0;
+    opacity: 1;
+    background-color: rgba(211,211,211 ,.3 );
+    z-index: 99;
+}
+
 #statisticsPanel{
-    /*display: flex;*/
     /*overflow: scroll;*/
 }
 
 .sidebar{
     overflow: scroll;
-    width: 20em;
+    max-width: 20em;
     text-wrap: normal;
     height: calc(100% - 76px);
 }
@@ -39,6 +50,10 @@
 
 .jumbotron {
     background: rgba(233, 236, 239, 0.7) !important;
+}
+
+.infoChart{
+    /*display: block;*/
 }
 
 .copyright_footer {

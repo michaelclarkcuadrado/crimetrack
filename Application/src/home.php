@@ -1,7 +1,9 @@
 <?php
 require_once 'api/config.php';
 session_start();
-$uid = $_SESSION['uid'];
+if(!isset($_SESSION['uid'])){
+    die("<script>location.href = './'</script>");
+}
 ?>
 
 <html>
@@ -30,6 +32,7 @@ $uid = $_SESSION['uid'];
                     <li class="nav-item dropdown">
                         <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                             Welcome,
+                            <?= $_SESSION['username']?>
                         </a>
                         <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown">
                             <a class="dropdown-item" href="editProfile.php">Edit Profile</a>
@@ -62,16 +65,17 @@ $uid = $_SESSION['uid'];
             </li>
         </ul>
     </div>
-    <div id="statisticsPanel">
+    <div style="display: block">
         <div v-show="neighborhoodSelections.length == 0 || crimeTypeSelections.length == 0" style="position: relative; top: 0; right: 0; height:100%; width: 100%; padding: 15px; text-align: center">
             Select some crimes and neighborhoods to get started.
         </div>
-        <div v-show="neighborhoodSelections.length > 0 && crimeTypeSelections.length > 0" style="height:100%; width: 100%">
-            <canvas id="racialPieChart"></canvas>
-            <canvas style="min-width: 100%" id="top10IUCRBarChart"></canvas>
-<!--            <canvas id="locationDescriptionsChart"></canvas>-->
-            <canvas id="arrestsChart"></canvas>
-            <canvas id="domesticChart"></canvas>
+        <div id="statisticsPanel" v-show="neighborhoodSelections.length > 0 && crimeTypeSelections.length > 0" style="height:100%; width: 100%;">
+            <img v-bind:src="getMapURL">
+            <canvas class="infoChart" id="racialPieChart"></canvas>
+            <canvas class="infoChart" id="top10IUCRBarChart"></canvas>
+            <canvas class="infoChart" id="locationDescriptionsChart"></canvas>
+            <canvas class="infoChart" id="arrestsChart"></canvas>
+            <canvas class="infoChart" id="domesticChart"></canvas>
             <div style="border: 1px solid black; padding: 5px;">
                 <h4 style="text-align: center;">Export This Data</h4>
                 <select id="dataExportSelectMonth">
@@ -120,13 +124,11 @@ $uid = $_SESSION['uid'];
                     ?>
                 </select>
                 <button v-on:click="downloadCSV()">Download CSV</button>
-            </div>
+            </div> <!-- Export Data Box -->
         </div>
     </div>
-</div>
-<div class="copyright_footer">
-    <div style="color: #ccc;" class="col-sm-6">
-        A Gettysburg College Project for Computer Science | <a href="https://github.com/michaelclarkcuadrado/crimetrack">Source Code</a>
+    <div v-show="updateMutex" id="loadingScreen">
+        <span style="position: absolute;top: 50%;left: 50%;transform: translate(-50%, -50%); font-size: xx-large; background-color: rgba(255,255,255,.5); border-radius: 3px; padding: 6px;">Loading...</span>
     </div>
 </div>
 <script src="vendor/jquery.min.js"></script>
@@ -153,7 +155,7 @@ $uid = $_SESSION['uid'];
         },
         methods: {
             toggleNeighborhoodSelection: function (neighborhood) {
-                if(this.updateMutex){
+                if (this.updateMutex) {
                     return;
                 }
                 if (neighborhood.isSelected) {
@@ -168,7 +170,7 @@ $uid = $_SESSION['uid'];
                 this.updateStatistics();
             },
             toggleCrimeTypeSelection: function (crimeType) {
-                if(this.updateMutex){
+                if (this.updateMutex) {
                     return;
                 }
                 if (crimeType.isSelected) {
@@ -188,10 +190,10 @@ $uid = $_SESSION['uid'];
                 this.updateStatistics();
             },
             updateStatistics: function () {
-                if(this.neighborhoodSelections.length == 0 || this.crimeTypeSelections.length == 0){
+                if (this.neighborhoodSelections.length == 0 || this.crimeTypeSelections.length == 0) {
                     return false;
                 }
-                if(this.updateMutex){
+                if (this.updateMutex) {
                     return false;
                 }
                 this.updateMutex = true;
@@ -240,7 +242,7 @@ $uid = $_SESSION['uid'];
                                 'rgba(255,99,132,1)',
                             ],
                             borderWidth: 1
-                        }]
+                        }],
                     };
                     newIUCRDataObj.labels = data.crimeStats.top10IUCR.map(crime => crime.crime_type);
                     newIUCRDataObj.datasets[0].data = data.crimeStats.top10IUCR.map(crime => crime.TOTAL);
@@ -248,7 +250,41 @@ $uid = $_SESSION['uid'];
                     self.top10IUCRBarChartInstance.update();
 
                     //update location descriptions
-
+                    let newLocationDescDataObj = {
+                        labels: [],
+                        datasets: [{
+                            data: [],
+                            backgroundColor: [
+                                'rgba(255, 99, 132, 0.2)',
+                                'rgba(255, 99, 132, 0.2)',
+                                'rgba(255, 99, 132, 0.2)',
+                                'rgba(255, 99, 132, 0.2)',
+                                'rgba(255, 99, 132, 0.2)',
+                                'rgba(255, 99, 132, 0.2)',
+                                'rgba(255, 99, 132, 0.2)',
+                                'rgba(255, 99, 132, 0.2)',
+                                'rgba(255, 99, 132, 0.2)',
+                                'rgba(255, 99, 132, 0.2)',
+                            ],
+                            borderColor: [
+                                'rgba(255,99,132,1)',
+                                'rgba(255,99,132,1)',
+                                'rgba(255,99,132,1)',
+                                'rgba(255,99,132,1)',
+                                'rgba(255,99,132,1)',
+                                'rgba(255,99,132,1)',
+                                'rgba(255,99,132,1)',
+                                'rgba(255,99,132,1)',
+                                'rgba(255,99,132,1)',
+                                'rgba(255,99,132,1)',
+                            ],
+                            borderWidth: 1
+                        }]
+                    };
+                    newLocationDescDataObj.labels = data.crimeStats.locationDescs.map(loc => loc.LOCATION_DESCRIPTION);
+                    newLocationDescDataObj.datasets[0].data = data.crimeStats.locationDescs.map(loc => loc.TOTAL);
+                    self.locationDescriptionsChart.data = newLocationDescDataObj;
+                    self.locationDescriptionsChart.update();
 
                     //update arrests
                     self.arrestPieChart.config.data.datasets[0].data = [data.crimeStats.arrestCount.true, data.crimeStats.arrestCount.false];
@@ -259,11 +295,11 @@ $uid = $_SESSION['uid'];
                     self.domesticPieChart.update();
 
                     self.updateMutex = false;
-                }, "json").fail(function() {
+                }, "json").fail(function () {
                     self.updateMutex = false;
                 });
             },
-            downloadCSV: function(){
+            downloadCSV: function () {
                 let monthSelect = document.getElementById('dataExportSelectMonth');
                 let month = monthSelect.options[monthSelect.selectedIndex].value;
                 let yearSelect = document.getElementById('dataExportSelectYear');
@@ -275,8 +311,13 @@ $uid = $_SESSION['uid'];
                     year: year
                 };
                 let params = $.param(argsObj);
-                window.location = 'api/downloadcsv.php?'+params;
+                window.location = 'api/downloadcsv.php?' + params;
             }
+        },
+        computed: {
+            getMapURL: function() {
+                return 'api/mapPinGenerator.php?neighborhoods=' + JSON.stringify(this.neighborhoodSelections);
+            },
         },
         mounted: function () {
             let self = this;
@@ -314,6 +355,12 @@ $uid = $_SESSION['uid'];
                         borderWidth: 1
                     }]
                 },
+                options: {
+                    title: {
+                        display: true,
+                        text: 'Racial Breakdown'
+                    }
+                }
             });
 
             //create top 10 IUCR chart
@@ -353,12 +400,58 @@ $uid = $_SESSION['uid'];
                     }]
                 },
                 options: {
-                    legend: false
+                    legend: false,
+                    title: {
+                        display: true,
+                        text: 'Top Crimes'
+                    }
                 }
             });
 
             //create location descriptions chart
-            //TODO
+            let locationDescriptionChartElement = document.getElementById("locationDescriptionsChart");
+            self.locationDescriptionsChart = new Chart(locationDescriptionChartElement, {
+                type: 'horizontalBar',
+                data: {
+                    title: "Most Dangerous Areas",
+                    labels: ["", "", "", "", "", "", "", "", "", ""],
+                    datasets: [{
+                        data: [],
+                        backgroundColor: [
+                            'rgba(255, 99, 132, 0.2)',
+                            'rgba(255, 99, 132, 0.2)',
+                            'rgba(255, 99, 132, 0.2)',
+                            'rgba(255, 99, 132, 0.2)',
+                            'rgba(255, 99, 132, 0.2)',
+                            'rgba(255, 99, 132, 0.2)',
+                            'rgba(255, 99, 132, 0.2)',
+                            'rgba(255, 99, 132, 0.2)',
+                            'rgba(255, 99, 132, 0.2)',
+                            'rgba(255, 99, 132, 0.2)',
+                        ],
+                        borderColor: [
+                            'rgba(255,99,132,1)',
+                            'rgba(255,99,132,1)',
+                            'rgba(255,99,132,1)',
+                            'rgba(255,99,132,1)',
+                            'rgba(255,99,132,1)',
+                            'rgba(255,99,132,1)',
+                            'rgba(255,99,132,1)',
+                            'rgba(255,99,132,1)',
+                            'rgba(255,99,132,1)',
+                            'rgba(255,99,132,1)',
+                        ],
+                        borderWidth: 1
+                    }]
+                },
+                options: {
+                    legend: false,
+                    title: {
+                        display: true,
+                        text: 'Most Dangerous Locations'
+                    }
+                }
+            });
 
             //create arrests chart
             let arrestsPieChartElement = document.getElementById("arrestsChart");
@@ -378,6 +471,12 @@ $uid = $_SESSION['uid'];
                         ],
                         borderWidth: 1
                     }]
+                },
+                options: {
+                    title: {
+                        display: true,
+                        text: 'Arrested'
+                    }
                 }
             });
 
@@ -399,6 +498,12 @@ $uid = $_SESSION['uid'];
                         ],
                         borderWidth: 1
                     }]
+                },
+                options: {
+                    title: {
+                        display: true,
+                        text: 'Domestic'
+                    }
                 }
             });
 
