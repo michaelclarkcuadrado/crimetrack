@@ -44,6 +44,8 @@ CREATE TABLE crimetrack_chicago_community_areas (
   race_percent_white  DECIMAL(3, 3) NOT NULL,
   race_percent_asian  DECIMAL(3, 3) NOT NULL,
   race_percent_other  DECIMAL(3, 3) NOT NULL,
+  centerX             INT(11) NOT NULL,
+  centerY             INT(11) NOT NULL,
   PRIMARY KEY (area_id)
 );
 
