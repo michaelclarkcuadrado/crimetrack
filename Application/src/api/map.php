@@ -44,6 +44,18 @@ function reset_image() {
 			alt="Near West Side"	title="Near West Side" target="_blank"
 			onMouseOver="change_image('Near_West_Side.jpg')"
 			onMouseOut = "reset_image()">
+
+			<AREA SHAPE="rect" coords="344, 444,377, 382" 
+			href="#" 
+			alt="South_Deering"	title="South_Deering" target="_blank"
+			onMouseOver="change_image('South_Deering.jpg')"
+			onMouseOut = "reset_image()">
+
+			<AREA SHAPE="rect" coords="322, 261, 304, 285" 
+			href="#" 
+			alt="Grand_Boulevard"	title="Grand_Boulevard" target="_blank"
+			onMouseOver="change_image('Grand_Boulevard.jpg')"
+			onMouseOut = "reset_image()">
 	</map>
 	
 </BODY>
