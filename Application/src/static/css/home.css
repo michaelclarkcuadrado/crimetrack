@@ -29,14 +29,24 @@
 }
 
 #statisticsPanel{
-    /*overflow: scroll;*/
+    overflow: scroll;
+    display:flex;
+    flex-wrap: wrap;
+    justify-content: space-evenly;
+    height: calc(100% - 76px);
 }
 
 .sidebar{
     overflow: scroll;
     max-width: 20em;
     text-wrap: normal;
+    flex-shrink: 0;
     height: calc(100% - 76px);
+}
+
+#map {
+    max-height: calc(100% - 76px);
+    width: auto;
 }
 
 .subtext{
@@ -54,6 +64,8 @@
 
 .infoChart{
     /*display: block;*/
+    width: 50%;
+    flex-grow: 1;
 }
 
 .copyright_footer {

@@ -81,7 +81,7 @@ if(isset($_POST['jsonBlob'])){
         }
     }
     $neighborhoodObj['totalCrimes'] = $totalCrimes;
-    $neighborhoodObj['crimesPerHundredThousand'] = (($totalPopulation / 100000) * $totalCrimes / $totalPopulation);
+    $neighborhoodObj['crimesPerHundredThousand'] = (($totalCrimes / $totalPopulation)  * 100000) / (date('Y') - 2001);
 
     //counts by arrest
     $arrestCountsQuery = "SELECT SUM(CASE WHEN ARREST = 'true' THEN 1 ELSE 0 END) AS `true`, SUM(CASE WHEN ARREST = 'false' THEN 1 ELSE 0 END) AS `false` FROM crimetrack_crimes WHERE IUCR IN $IUCRQuerySubString AND COMMUNITY_AREA IN $neighborhoodQuerySubString";

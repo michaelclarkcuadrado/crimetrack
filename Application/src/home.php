@@ -1,7 +1,7 @@
 <?php
 require_once 'api/config.php';
 session_start();
-if(!isset($_SESSION['uid'])){
+if (!isset($_SESSION['uid'])) {
     die("<script>location.href = './'</script>");
 }
 ?>
@@ -32,7 +32,7 @@ if(!isset($_SESSION['uid'])){
                     <li class="nav-item dropdown">
                         <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                             Welcome,
-                            <?= $_SESSION['username']?>
+
                         </a>
                         <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown">
                             <a class="dropdown-item" href="editProfile.php">Edit Profile</a>
@@ -65,67 +65,76 @@ if(!isset($_SESSION['uid'])){
             </li>
         </ul>
     </div>
-    <div style="display: block">
-        <div v-show="neighborhoodSelections.length == 0 || crimeTypeSelections.length == 0" style="position: relative; top: 0; right: 0; height:100%; width: 100%; padding: 15px; text-align: center">
-            Select some crimes and neighborhoods to get started.
+    <div v-show="neighborhoodSelections.length == 0 || crimeTypeSelections.length == 0" style="position: relative; top: 0; right: 0;width: 100%; padding: 15px; text-align: center">
+        Select some crimes and neighborhoods to get started.
+    </div>
+    <div id="statisticsPanel" v-show="neighborhoodSelections.length > 0 && crimeTypeSelections.length > 0">
+        <div>
+            <div>
+                Selection Fast Facts
+                <ul>
+                    <li>Population: {{ Number(neighborhoodStats.totalPopulation).toLocaleString() }}</li>
+                    <li>Total Crimes (2001 - <?= date('Y') ?>): {{ Number(neighborhoodStats.totalCrimes).toLocaleString() }}</li>
+                    <li>Average Income: {{ '$' + Number(neighborhoodStats.averageIncome).toLocaleString() }}</li>
+                    <li>Crimes per 100,000 people: {{ neighborhoodStats.crimesPerHundredThousand }}</li>
+                </ul>
+            </div>
+            <img id="map" class="infoChart" v-bind:src="getMapURL">
         </div>
-        <div id="statisticsPanel" v-show="neighborhoodSelections.length > 0 && crimeTypeSelections.length > 0" style="height:100%; width: 100%;">
-            <img v-bind:src="getMapURL">
-            <canvas class="infoChart" id="racialPieChart"></canvas>
-            <canvas class="infoChart" id="top10IUCRBarChart"></canvas>
-            <canvas class="infoChart" id="locationDescriptionsChart"></canvas>
-            <canvas class="infoChart" id="arrestsChart"></canvas>
-            <canvas class="infoChart" id="domesticChart"></canvas>
-            <div style="border: 1px solid black; padding: 5px;">
-                <h4 style="text-align: center;">Export This Data</h4>
-                <select id="dataExportSelectMonth">
-                    <option value="1">
-                        January
-                    </option>
-                    <option value="2">
-                        February
-                    </option>
-                    <option value="3">
-                        March
-                    </option>
-                    <option value="4">
-                        April
-                    </option>
-                    <option value="5">
-                        May
-                    </option>
-                    <option value="6">
-                        June
-                    </option>
-                    <option value="7">
-                        July
-                    </option>
-                    <option value="8">
-                        August
-                    </option>
-                    <option value="9">
-                        September
-                    </option>
-                    <option value="10">
-                        October
-                    </option>
-                    <option value="11">
-                        November
-                    </option>
-                    <option value="12">
-                        December
-                    </option>
-                </select>
-                <select id="dataExportSelectYear">
-                    <?php
-                    for ($i = 2001; $i <= date('Y'); $i++) {
-                        echo "<option value='$i'>$i</option>";
-                    }
-                    ?>
-                </select>
-                <button v-on:click="downloadCSV()">Download CSV</button>
-            </div> <!-- Export Data Box -->
-        </div>
+        <canvas class="infoChart" id="racialPieChart"></canvas>
+        <canvas class="infoChart" id="arrestsChart"></canvas>
+        <canvas class="infoChart" id="domesticChart"></canvas>
+        <canvas class="infoChart" id="top10IUCRBarChart"></canvas>
+        <canvas class="infoChart" id="locationDescriptionsChart"></canvas>
+        <div style="border: 1px solid black; padding: 5px;">
+            <h4 style="text-align: center;">Export This Data</h4>
+            <select id="dataExportSelectMonth">
+                <option value="1">
+                    January
+                </option>
+                <option value="2">
+                    February
+                </option>
+                <option value="3">
+                    March
+                </option>
+                <option value="4">
+                    April
+                </option>
+                <option value="5">
+                    May
+                </option>
+                <option value="6">
+                    June
+                </option>
+                <option value="7">
+                    July
+                </option>
+                <option value="8">
+                    August
+                </option>
+                <option value="9">
+                    September
+                </option>
+                <option value="10">
+                    October
+                </option>
+                <option value="11">
+                    November
+                </option>
+                <option value="12">
+                    December
+                </option>
+            </select>
+            <select id="dataExportSelectYear">
+                <?php
+                for ($i = 2001; $i <= date('Y'); $i++) {
+                    echo "<option value='$i'>$i</option>";
+                }
+                ?>
+            </select>
+            <button v-on:click="downloadCSV()">Download CSV</button>
+        </div> <!-- Export Data Box -->
     </div>
     <div v-show="updateMutex" id="loadingScreen">
         <span style="position: absolute;top: 50%;left: 50%;transform: translate(-50%, -50%); font-size: xx-large; background-color: rgba(255,255,255,.5); border-radius: 3px; padding: 6px;">Loading...</span>
@@ -315,7 +324,7 @@ if(!isset($_SESSION['uid'])){
             }
         },
         computed: {
-            getMapURL: function() {
+            getMapURL: function () {
                 return 'api/mapPinGenerator.php?neighborhoods=' + JSON.stringify(this.neighborhoodSelections);
             },
         },
@@ -359,7 +368,8 @@ if(!isset($_SESSION['uid'])){
                     title: {
                         display: true,
                         text: 'Racial Breakdown'
-                    }
+                    },
+                    responsive: true
                 }
             });
 
@@ -404,7 +414,8 @@ if(!isset($_SESSION['uid'])){
                     title: {
                         display: true,
                         text: 'Top Crimes'
-                    }
+                    },
+                    responsive: true
                 }
             });
 
@@ -449,7 +460,8 @@ if(!isset($_SESSION['uid'])){
                     title: {
                         display: true,
                         text: 'Most Dangerous Locations'
-                    }
+                    },
+                    responsive: true
                 }
             });
 
@@ -476,7 +488,8 @@ if(!isset($_SESSION['uid'])){
                     title: {
                         display: true,
                         text: 'Arrested'
-                    }
+                    },
+                    responsive: true
                 }
             });
 
@@ -503,7 +516,8 @@ if(!isset($_SESSION['uid'])){
                     title: {
                         display: true,
                         text: 'Domestic'
-                    }
+                    },
+                    responsive: true
                 }
             });
 
