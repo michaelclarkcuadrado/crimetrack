@@ -63,63 +63,64 @@ $uid = $_SESSION['uid'];
         </ul>
     </div>
     <div id="statisticsPanel">
-        SELECTED NEIGHBORHOOD I.D.S:
-        <span v-for="id in neighborhoodSelections">
-            {{id}}
-        </span>
-        <br>
-        SELECTED CRIME I.D.S:
-        <span v-for="id in crimeTypeSelections">
-            {{id}}
-        </span>
-        <div style="border: 1px solid black; padding: 5px;">
-            <h4 style="text-align: center;">Export This Data</h4>
-            <select id="dataExportSelectMonth">
-                <option value="1">
-                    January
-                </option>
-                <option value="2">
-                    February
-                </option>
-                <option value="3">
-                    March
-                </option>
-                <option value="4">
-                    April
-                </option>
-                <option value="5">
-                    May
-                </option>
-                <option value="6">
-                    June
-                </option>
-                <option value="7">
-                    July
-                </option>
-                <option value="8">
-                    August
-                </option>
-                <option value="9">
-                    September
-                </option>
-                <option value="10">
-                    October
-                </option>
-                <option value="11">
-                    November
-                </option>
-                <option value="12">
-                    December
-                </option>
-            </select>
-            <select id="dataExportSelectYear">
-                <?php
-                for ($i = 2001; $i <= date('Y'); $i++) {
-                    echo "<option value='$i'>$i</option>";
-                }
-                ?>
-            </select>
-            <button v-on:click="downloadCSV()">Download CSV</button>
+        <div v-show="neighborhoodSelections.length == 0 || crimeTypeSelections.length == 0" style="position: relative; top: 0; right: 0; height:100%; width: 100%; padding: 15px; text-align: center">
+            Select some crimes and neighborhoods to get started.
+        </div>
+        <div v-show="neighborhoodSelections.length > 0 && crimeTypeSelections.length > 0" style="height:100%; width: 100%">
+            <canvas id="racialPieChart"></canvas>
+            <canvas style="min-width: 100%" id="top10IUCRBarChart"></canvas>
+<!--            <canvas id="locationDescriptionsChart"></canvas>-->
+            <canvas id="arrestsChart"></canvas>
+            <canvas id="domesticChart"></canvas>
+            <div style="border: 1px solid black; padding: 5px;">
+                <h4 style="text-align: center;">Export This Data</h4>
+                <select id="dataExportSelectMonth">
+                    <option value="1">
+                        January
+                    </option>
+                    <option value="2">
+                        February
+                    </option>
+                    <option value="3">
+                        March
+                    </option>
+                    <option value="4">
+                        April
+                    </option>
+                    <option value="5">
+                        May
+                    </option>
+                    <option value="6">
+                        June
+                    </option>
+                    <option value="7">
+                        July
+                    </option>
+                    <option value="8">
+                        August
+                    </option>
+                    <option value="9">
+                        September
+                    </option>
+                    <option value="10">
+                        October
+                    </option>
+                    <option value="11">
+                        November
+                    </option>
+                    <option value="12">
+                        December
+                    </option>
+                </select>
+                <select id="dataExportSelectYear">
+                    <?php
+                    for ($i = 2001; $i <= date('Y'); $i++) {
+                        echo "<option value='$i'>$i</option>";
+                    }
+                    ?>
+                </select>
+                <button v-on:click="downloadCSV()">Download CSV</button>
+            </div>
         </div>
     </div>
 </div>
@@ -131,6 +132,7 @@ $uid = $_SESSION['uid'];
 <script src="vendor/jquery.min.js"></script>
 <script src="vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
 <script src="vendor/vue.min.js"></script>
+<script src="vendor/Chart.bundle.min.js"></script>
 <script>
     let appVue = new Vue({
         el: "#main",
@@ -139,9 +141,21 @@ $uid = $_SESSION['uid'];
             crimeTypes: {},
             neighborhoodSelections: [],
             crimeTypeSelections: [],
+            updateMutex: false,
+            neighborhoodStats: {},
+            crimeStats: {},
+            racialPieChartInstance: {},
+            top10IUCRBarChartInstance: {},
+            locationDescriptionsChart: {},
+            arrestPieChart: {},
+            domesticPieChart: {},
+
         },
         methods: {
             toggleNeighborhoodSelection: function (neighborhood) {
+                if(this.updateMutex){
+                    return;
+                }
                 if (neighborhood.isSelected) {
                     this.neighborhoodSelections = this.neighborhoodSelections.filter(function (val) {
                         return val !== neighborhood.area_id;
@@ -154,9 +168,11 @@ $uid = $_SESSION['uid'];
                 this.updateStatistics();
             },
             toggleCrimeTypeSelection: function (crimeType) {
+                if(this.updateMutex){
+                    return;
+                }
                 if (crimeType.isSelected) {
                     for (var subcrime in crimeType.subcrimes) {
-                        console.log(subcrime);
                         if (this.crimeTypeSelections.includes(subcrime)) {
                             this.crimeTypeSelections = this.crimeTypeSelections.filter(function (val) {
                                 return val !== subcrime;
@@ -172,13 +188,80 @@ $uid = $_SESSION['uid'];
                 this.updateStatistics();
             },
             updateStatistics: function () {
+                if(this.neighborhoodSelections.length == 0 || this.crimeTypeSelections.length == 0){
+                    return false;
+                }
+                if(this.updateMutex){
+                    return false;
+                }
+                this.updateMutex = true;
                 let jsonBlob = JSON.stringify({
                     IUCRs: this.crimeTypeSelections,
                     neighborhoods: this.neighborhoodSelections
                 });
+                let self = this;
                 $.post('api/getStatisticsMatch.php', {jsonBlob: jsonBlob}, function (data) {
-                    //TODO
-                }, "json");
+                    self.crimeStats = data.crimeStats;
+                    self.neighborhoodStats = data.neighborhoodStats;
+
+                    //update charts
+                    //update racial pie chart
+                    self.racialPieChartInstance.config.data.datasets[0].data = data.neighborhoodStats.racialBreakdown;
+                    self.racialPieChartInstance.update();
+
+                    //update top IUCRS
+                    let newIUCRDataObj = {
+                        title: "Most Common Crimes",
+                        labels: [],
+                        datasets: [{
+                            data: [],
+                            backgroundColor: [
+                                'rgba(255, 99, 132, 0.2)',
+                                'rgba(255, 99, 132, 0.2)',
+                                'rgba(255, 99, 132, 0.2)',
+                                'rgba(255, 99, 132, 0.2)',
+                                'rgba(255, 99, 132, 0.2)',
+                                'rgba(255, 99, 132, 0.2)',
+                                'rgba(255, 99, 132, 0.2)',
+                                'rgba(255, 99, 132, 0.2)',
+                                'rgba(255, 99, 132, 0.2)',
+                                'rgba(255, 99, 132, 0.2)',
+                            ],
+                            borderColor: [
+                                'rgba(255,99,132,1)',
+                                'rgba(255,99,132,1)',
+                                'rgba(255,99,132,1)',
+                                'rgba(255,99,132,1)',
+                                'rgba(255,99,132,1)',
+                                'rgba(255,99,132,1)',
+                                'rgba(255,99,132,1)',
+                                'rgba(255,99,132,1)',
+                                'rgba(255,99,132,1)',
+                                'rgba(255,99,132,1)',
+                            ],
+                            borderWidth: 1
+                        }]
+                    };
+                    newIUCRDataObj.labels = data.crimeStats.top10IUCR.map(crime => crime.crime_type);
+                    newIUCRDataObj.datasets[0].data = data.crimeStats.top10IUCR.map(crime => crime.TOTAL);
+                    self.top10IUCRBarChartInstance.data = newIUCRDataObj;
+                    self.top10IUCRBarChartInstance.update();
+
+                    //update location descriptions
+
+
+                    //update arrests
+                    self.arrestPieChart.config.data.datasets[0].data = [data.crimeStats.arrestCount.true, data.crimeStats.arrestCount.false];
+                    self.arrestPieChart.update();
+
+                    //update domestics
+                    self.domesticPieChart.config.data.datasets[0].data = [data.crimeStats.domesticCount.true, data.crimeStats.domesticCount.false];
+                    self.domesticPieChart.update();
+
+                    self.updateMutex = false;
+                }, "json").fail(function() {
+                    self.updateMutex = false;
+                });
             },
             downloadCSV: function(){
                 let monthSelect = document.getElementById('dataExportSelectMonth');
@@ -203,6 +286,125 @@ $uid = $_SESSION['uid'];
             $.getJSON('api/listCrimeTypes', function (data) {
                 self.crimeTypes = data;
             });
+
+            //init charts
+            //create race piechart
+            let racePieChartElement = document.getElementById("racialPieChart");
+            self.racialPieChartInstance = new Chart(racePieChartElement, {
+                type: 'pie',
+                data: {
+                    title: "Race",
+                    labels: ["Latino", "Black", "Asian", "White", "Other"],
+                    datasets: [{
+                        data: [],
+                        backgroundColor: [
+                            'rgba(255, 99, 132, 0.2)',
+                            'rgba(255, 159, 64, 0.2)',
+                            'rgba(255, 206, 86, 0.2)',
+                            'rgba(75, 192, 192, 0.2)',
+                            'rgba(153, 102, 255, 0.2)'
+                        ],
+                        borderColor: [
+                            'rgba(255,99,132,1)',
+                            'rgba(255, 159, 64, 1)',
+                            'rgba(255, 206, 86, 1)',
+                            'rgba(75, 192, 192, 1)',
+                            'rgba(153, 102, 255, 1)'
+                        ],
+                        borderWidth: 1
+                    }]
+                },
+            });
+
+            //create top 10 IUCR chart
+            let top10IUCRChartElement = document.getElementById("top10IUCRBarChart");
+            self.top10IUCRBarChartInstance = new Chart(top10IUCRChartElement, {
+                type: 'horizontalBar',
+                data: {
+                    title: "Most Common Crimes",
+                    labels: ["", "", "", "", "", "", "", "", "", ""],
+                    datasets: [{
+                        data: [],
+                        backgroundColor: [
+                            'rgba(255, 99, 132, 0.2)',
+                            'rgba(255, 99, 132, 0.2)',
+                            'rgba(255, 99, 132, 0.2)',
+                            'rgba(255, 99, 132, 0.2)',
+                            'rgba(255, 99, 132, 0.2)',
+                            'rgba(255, 99, 132, 0.2)',
+                            'rgba(255, 99, 132, 0.2)',
+                            'rgba(255, 99, 132, 0.2)',
+                            'rgba(255, 99, 132, 0.2)',
+                            'rgba(255, 99, 132, 0.2)',
+                        ],
+                        borderColor: [
+                            'rgba(255,99,132,1)',
+                            'rgba(255,99,132,1)',
+                            'rgba(255,99,132,1)',
+                            'rgba(255,99,132,1)',
+                            'rgba(255,99,132,1)',
+                            'rgba(255,99,132,1)',
+                            'rgba(255,99,132,1)',
+                            'rgba(255,99,132,1)',
+                            'rgba(255,99,132,1)',
+                            'rgba(255,99,132,1)',
+                        ],
+                        borderWidth: 1
+                    }]
+                },
+                options: {
+                    legend: false
+                }
+            });
+
+            //create location descriptions chart
+            //TODO
+
+            //create arrests chart
+            let arrestsPieChartElement = document.getElementById("arrestsChart");
+            self.arrestPieChart = new Chart(arrestsPieChartElement, {
+                type: 'pie',
+                data: {
+                    labels: ["True", "False"],
+                    datasets: [{
+                        data: [],
+                        backgroundColor: [
+                            'rgba(255, 206, 86, 0.2)',
+                            'rgba(75, 192, 192, 0.2)',
+                        ],
+                        borderColor: [
+                            'rgba(255, 206, 86, 1)',
+                            'rgba(75, 192, 192, 1)',
+                        ],
+                        borderWidth: 1
+                    }]
+                }
+            });
+
+            //create domestic chart
+            let domesticPieChartElement = document.getElementById("domesticChart");
+            self.domesticPieChart = new Chart(domesticPieChartElement, {
+                type: 'pie',
+                data: {
+                    labels: ["True", "False"],
+                    datasets: [{
+                        data: [],
+                        backgroundColor: [
+                            'rgba(255, 206, 86, 0.2)',
+                            'rgba(75, 192, 192, 0.2)',
+                        ],
+                        borderColor: [
+                            'rgba(255, 206, 86, 1)',
+                            'rgba(75, 192, 192, 1)',
+                        ],
+                        borderWidth: 1
+                    }]
+                }
+            });
+
+
+            //todo: preselect user-saved data
+
         }
     });
 </script>

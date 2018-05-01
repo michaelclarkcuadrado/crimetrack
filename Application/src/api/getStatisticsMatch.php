@@ -51,11 +51,12 @@ if(isset($_POST['jsonBlob'])){
     $neighborhoodObj = array(
         'totalPopulation' => $totalPopulation,
         'averageIncome' => round($averageIncome, 2),
-        'latino_population' => intval($total_latino_population),
-        'black_population' => intval($total_black_population),
-        'white_population' => intval($total_white_population),
-        'asian_population' => intval($total_asian_population),
-        'other_population' => intval($total_other_population),
+        'racialBreakdown' => array(
+                intval($total_latino_population),
+                intval($total_black_population),
+                intval($total_asian_population),
+                intval($total_white_population),
+                intval($total_other_population))
         );
 
 
@@ -70,15 +71,13 @@ if(isset($_POST['jsonBlob'])){
     //counts by IUCR
     $IUCRCountQuery = "SELECT CONCAT(crime_type, ' - ', crime_description) as crime_type, COUNT(*) as TOTAL FROM crimetrack_crimes JOIN crimetrack_crime_type t on crimetrack_crimes.IUCR = t.IUCR_PK WHERE IUCR IN $IUCRQuerySubString AND COMMUNITY_AREA IN $neighborhoodQuerySubString GROUP BY IUCR ORDER BY Total DESC ";
     $IUCRCountResult = $db->query($IUCRCountQuery);
-    $IUCRs = array();
-    $top10ICURS = array();
+    $top10IUCRs = array();
     $rowLoopCount = 0;
     $totalCrimes = 0;
     while($row = $IUCRCountResult->fetch(PDO::FETCH_ASSOC)){
         $totalCrimes += intval($row['TOTAL']);
-        array_push($IUCRs, $row);
         if($rowLoopCount++ < 10){
-            array_push($top10ICURS, $row);
+            array_push($top10IUCRs, $row);
         }
     }
     $neighborhoodObj['totalCrimes'] = $totalCrimes;
@@ -102,7 +101,7 @@ if(isset($_POST['jsonBlob'])){
         array_push($locationDescs, $row);
     }
 
-    $crimeObj = array('IUCRCount' => $IUCRs, 'top10IUCR' => $top10ICURS, 'arrestCount' => $arrests, 'domesticCount' => $domestics, 'locationDescs' => $locationDescs);
+    $crimeObj = array('top10IUCR' => $top10IUCRs, 'arrestCount' => $arrests, 'domesticCount' => $domestics, 'locationDescs' => $locationDescs);
 
     //dump as JSON
     echo json_encode(array('neighborhoodStats' => $neighborhoodObj, 'crimeStats' => $crimeObj));

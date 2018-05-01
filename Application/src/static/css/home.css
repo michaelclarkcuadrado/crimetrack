@@ -12,18 +12,20 @@
 #main {
     background-size: cover;
     width: 100%;
-    height: calc(100% - 76px);
+    /*height: calc(100% - 76px);*/
     display: flex;
 }
 
 #statisticsPanel{
     /*display: flex;*/
+    /*overflow: scroll;*/
 }
 
 .sidebar{
     overflow: scroll;
     width: 20em;
     text-wrap: normal;
+    height: calc(100% - 76px);
 }
 
 .subtext{
