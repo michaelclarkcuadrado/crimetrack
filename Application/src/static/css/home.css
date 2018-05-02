@@ -16,7 +16,7 @@
     display: flex;
 }
 
-#loadingScreen{
+#loadingScreen {
     position: fixed;
     display: block;
     width: 100%;
@@ -24,19 +24,20 @@
     top: 0;
     right: 0;
     opacity: 1;
-    background-color: rgba(211,211,211 ,.3 );
+    background-color: rgba(211, 211, 211, .3);
     z-index: 99;
 }
 
-#statisticsPanel{
+#statisticsPanel {
     overflow: scroll;
-    display:flex;
+    display: flex;
     flex-wrap: wrap;
+    flex-grow: 1;
     justify-content: space-evenly;
     height: calc(100% - 76px);
 }
 
-.sidebar{
+.sidebar {
     overflow: scroll;
     max-width: 20em;
     text-wrap: normal;
@@ -46,10 +47,10 @@
 
 #map {
     max-height: calc(100% - 76px);
-    width: auto;
+    height: 100%;
 }
 
-.subtext{
+.subtext {
     font-size: x-small;
 }
 
@@ -62,7 +63,7 @@
     background: rgba(233, 236, 239, 0.7) !important;
 }
 
-.infoChart{
+.infoChart {
     /*display: block;*/
     width: 50%;
     flex-grow: 1;

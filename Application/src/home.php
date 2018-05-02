@@ -27,11 +27,11 @@ if (!isset($_SESSION['uid'])) {
             <div class="collapse navbar-collapse" id="navbarSupportedContent" style="margin-bottom: 0; margin-right: 10px">
                 <ul class="navbar-nav mr-auto">
                     <li class="nav-item active"><a class="nav-link" href="#">Home <span class="sr-only">(current)</span></a></li>
-                    <li class="nav-item"><a class="nav-link" href="AboutUs.html">About Us</a></li>
+                    <li class="nav-item"><a class="nav-link" href="AboutUs.php">About Us</a></li>
                     <span class="navbar-text" style="font-size: 25px;">&emsp;|&emsp;</span>
                     <li class="nav-item dropdown">
                         <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                            Welcome,
+                            Welcome, <?=$_SESSION['username']?>
 
                         </a>
                         <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown">
@@ -68,25 +68,32 @@ if (!isset($_SESSION['uid'])) {
     <div v-show="neighborhoodSelections.length == 0 || crimeTypeSelections.length == 0" style="position: relative; top: 0; right: 0;width: 100%; padding: 15px; text-align: center">
         Select some crimes and neighborhoods to get started.
     </div>
-    <div id="statisticsPanel" v-show="neighborhoodSelections.length > 0 && crimeTypeSelections.length > 0">
-        <div>
-            <div>
-                Selection Fast Facts
-                <ul>
-                    <li>Population: {{ Number(neighborhoodStats.totalPopulation).toLocaleString() }}</li>
-                    <li>Total Crimes (2001 - <?= date('Y') ?>): {{ Number(neighborhoodStats.totalCrimes).toLocaleString() }}</li>
-                    <li>Average Income: {{ '$' + Number(neighborhoodStats.averageIncome).toLocaleString() }}</li>
-                    <li>Crimes per 100,000 people: {{ neighborhoodStats.crimesPerHundredThousand }}</li>
-                </ul>
-            </div>
-            <img id="map" class="infoChart" v-bind:src="getMapURL">
-        </div>
+    <div class="sidebar" style="max-width: 33em" id="statisticsPanel" v-show="neighborhoodSelections.length > 0 && crimeTypeSelections.length > 0">
+        <h4 style="text-align: center; margin: auto;">Selection Fast Facts</h4>
+        <table class="table table-striped">
+            <tr>
+                <td>Population</td>
+                <td>{{ Number(neighborhoodStats.totalPopulation).toLocaleString() }}</td>
+            </tr>
+            <tr>
+                <td>Total Crimes (2001 - <?= date('Y') ?>)</td>
+                <td>{{ Number(neighborhoodStats.totalCrimes).toLocaleString() }}</td>
+            </tr>
+            <tr>
+                <td>Average Income</td>
+                <td>{{ '$' + Number(neighborhoodStats.averageIncome).toLocaleString() }}</td>
+            </tr>
+            <tr>
+                <td>Crimes per 100,000 people</td>
+                <td>{{ neighborhoodStats.crimesPerHundredThousand }}</td>
+            </tr>
+        </table>
         <canvas class="infoChart" id="racialPieChart"></canvas>
         <canvas class="infoChart" id="arrestsChart"></canvas>
         <canvas class="infoChart" id="domesticChart"></canvas>
         <canvas class="infoChart" id="top10IUCRBarChart"></canvas>
         <canvas class="infoChart" id="locationDescriptionsChart"></canvas>
-        <div style="border: 1px solid black; padding: 5px;">
+        <div style="border: 1px solid black; padding: 5px; margin: auto;">
             <h4 style="text-align: center;">Export This Data</h4>
             <select id="dataExportSelectMonth">
                 <option value="1">
@@ -135,6 +142,12 @@ if (!isset($_SESSION['uid'])) {
             </select>
             <button v-on:click="downloadCSV()">Download CSV</button>
         </div> <!-- Export Data Box -->
+    </div>
+    <div id="statisticsPanel" v-show="neighborhoodSelections.length > 0 && crimeTypeSelections.length > 0">
+        <div align="center" style="display: inline-block">
+            
+            <img id="map" v-bind:src="getMapURL">
+        </div>
     </div>
     <div v-show="updateMutex" id="loadingScreen">
         <span style="position: absolute;top: 50%;left: 50%;transform: translate(-50%, -50%); font-size: xx-large; background-color: rgba(255,255,255,.5); border-radius: 3px; padding: 6px;">Loading...</span>

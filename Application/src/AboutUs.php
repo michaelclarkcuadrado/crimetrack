@@ -1,3 +1,10 @@
+<?php
+require_once 'api/config.php';
+session_start();
+if (!isset($_SESSION['uid'])) {
+    die("<script>location.href = './'</script>");
+}
+?>
 <html>
 
 <head>
@@ -33,7 +40,6 @@
                             </a>
                             <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown">
                                 <a class="dropdown-item" href="editProfile.php">Edit Profile</a>
-                                <a class="dropdown-item" href="#">View Favorites</a>
                                 <div class="dropdown-divider"></div>
                                 <a class="dropdown-item" href="api/logout.php">Log out</a>
                             </div>
@@ -44,7 +50,35 @@
         </div>
     </div>
     <div id="main">
-        <h3 style="max-width: 550px; max-height: fit-content; margin: 10px auto; border: 1px solid black; padding: 5px">Crime Track was created by a team of Gettysburg College students for professor Sunghee Kim's database course. <br /> Development Team: <br /> Michael Clark-Cuadrado Tracy Tang Ben Boucher</h3>
+        <!--<h3 style="max-width: 550px; max-height: fit-content; margin: 10px auto; border: 1px solid black; padding: 5px"><br /> Development Team: <br /> Michael Clark-Cuadrado Tracy Tang Ben Boucher</h3>-->
+        <div class="container" style="margin: 10px auto">
+            <div class="row">
+                <div class="col">
+                    <h3 style="text-align: center">Crime Track was created by a team of Gettysburg College students for professor Sunghee Kim's database course.</h3>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-sm" style="background-color: rgba(214, 72, 72, 0.3); height: 100%; margin: 10px; border-radius: .3rem; padding: 10px">
+                    <img src="static/img/default-image.png" class="rounded mx-auto d-block" width=300 height=300>
+                    <br />
+                    <h4>Yidan Tang</h4>
+                    <ul>
+                        <li>Email: tangyi01@gettysburg.edu</li>
+                        <li>Class 2019
+                    </ul>
+                </div>
+                <div class="col-sm" style="background-color: rgba(177, 127, 70, 0.3); height: 100%; margin: 10px; border-radius: .3rem; padding: 10px">
+                    <img src="static/img/default-image.png" class="rounded mx-auto d-block" width=300 height=300>
+                    <br />
+                    <h4>Michael Clark-Cuadrado</h4>
+                </div>
+                <div class="col-sm" style="background-color: rgba(179, 167, 63, 0.3); height: 100%; margin: 10px; border-radius: .3rem; padding: 10px">
+                    <img src="static/img/default-image.png" class="rounded mx-auto d-block" width=300 height=300>
+                    <br />
+                    <h4>Ben Boucher</h4>
+                </div>
+            </div>
+        </div>
     </div>
     <div class="copyright_footer">
         <div style="color: #ccc;" class="col-sm-6">
