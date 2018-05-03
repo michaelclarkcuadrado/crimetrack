@@ -71,11 +71,19 @@ if (!isset($_SESSION['uid'])) {
                     <img src="static/img/default-image.png" class="rounded mx-auto d-block" width=300 height=300>
                     <br />
                     <h4>Michael Clark-Cuadrado</h4>
+					<ul>
+                        <li>Email: clarmi03@gettysburg.edu</li>
+                        <li>Class 2018
+                    </ul>
                 </div>
                 <div class="col-sm" style="background-color: rgba(179, 167, 63, 0.3); height: 100%; margin: 10px; border-radius: .3rem; padding: 10px">
                     <img src="static/img/default-image.png" class="rounded mx-auto d-block" width=300 height=300>
                     <br />
                     <h4>Ben Boucher</h4>
+					<ul>
+                        <li>Email: boucbe01@gettysburg.edu</li>
+                        <li>Class 2020
+                    </ul>
                 </div>
             </div>
         </div>

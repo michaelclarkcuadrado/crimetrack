@@ -3,7 +3,7 @@
     include('api/edit.php');
     session_start();
     $uid = $_SESSION['uid'];
-
+	$op = $_GET['op'];
     if ($op == 'password') {
         changePass($_POST);
     }

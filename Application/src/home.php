@@ -68,7 +68,7 @@ if (!isset($_SESSION['uid'])) {
     <div v-show="neighborhoodSelections.length == 0 || crimeTypeSelections.length == 0" style="position: relative; top: 0; right: 0;width: 100%; padding: 15px; text-align: center">
         Select some crimes and neighborhoods to get started.
     </div>
-    <div class="sidebar" style="max-width: 33em" id="statisticsPanel" v-show="neighborhoodSelections.length > 0 && crimeTypeSelections.length > 0">
+    <div class="sidebar" style="max-width: 49em" id="statisticsPanel" v-show="neighborhoodSelections.length > 0 && crimeTypeSelections.length > 0">
         <h4 style="text-align: center; margin: auto;">Selection Fast Facts</h4>
         <table class="table table-striped">
             <tr>

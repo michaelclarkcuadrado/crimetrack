@@ -1,30 +1,10 @@
 <?php
     include_once('config.php');
-    
-    function editUname($data) {
-        $uid = $_SESSION['uid'];
-
-        global $db;
-
-        $newUsername = $data['username'];
-        
-        if(isset($newUsername)) {
-    		$updateUname = "UPDATE `crimetrack_users` SET username = '$newUsername' WHERE user_id = '$uid'";
-            $updateResult = $db->query($updateUname);
-            
-		    if($updateResult == FALSE) {
-			    die("Database refused to respnse.");
-            }
-            $_SESSION['username'] = $newUsername;
-            header("Location: ./home.php");
-        } else {
-            die("<script>location.href = '/'</script>");
-        }
-    }
+	session_start();
 
     function changePass($data) {
+		echo "What's wrong??";
         $uid = $_SESSION['uid'];
-
         global $db;
         
         $oldPass = MD5($data['oldPassword']);
