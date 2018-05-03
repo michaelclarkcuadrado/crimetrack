@@ -1,9 +1,8 @@
 <?php
     include_once('config.php');
-	session_start();
 
     function changePass($data) {
-		echo "What's wrong??";
+        session_start();
         $uid = $_SESSION['uid'];
         global $db;
         

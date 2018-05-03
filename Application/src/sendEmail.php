@@ -36,21 +36,34 @@
 		echo "<script type='text/javascript'>alert('$msg');</script>";
 	}
 	else{
-		$getUID = "SELECT user_id FROM `crimetrack_users` WHERE username = '$name'";
-		$uid = $db->query($getUID);
+		$getUser = "SELECT user_id, email FROM `crimetrack_users` WHERE username = '$name'";
+		$result = $db->query($getUser);
+		$result = $result->fetch(PDO::FETCH_ASSOC);
+		$uemail = $result['email'];
+		$uid = $result['user_id'];
+
+		if($email == $uemail) {
+			$to      = $uemail;
+			$subject = "Password for $name";
+			$password = randomPassword();
+			$password_hash = MD5($password);
+		
+			$din = "UPDATE `crimetrack_users` SET password_hash = '$password_hash' WHERE user_id = '$uid'";
+			$passResult = $db->query($din);
+			if($passResult == FALSE) {
+				die("Database refused to respnse.");
+			}
+		
+			$content  = "Password for $name <$email> \r \n $password \r \n Reset your password here: http://cs.gettysburg.edu/~tangyi01/cs360/crimetrack/editProfile.php?op=$uid&p=$password_hash \n"; // update link to changePassword
+			$result  = mail($to, $subject, $content);
+		}
+		else{
+			$msg = "Please input the email address registered when signed up.";
+			echo "<script type='text/javascript'>alert('$msg');</script>";
+		}
+		
 	}
 	
-
-	$to      = $_POST['emailSend'];
-	$subject = "Password for $name";
-	$password = randomPassword();
-	
-	$din = "UPDATE crimetrack_users"."SET password_hash = $password WHERE user_id=$getUID";
-	$db->query($din);
-	
-	
-	$content  = "Password for $name <$email>. $password. \r \n http://cs.gettysburg.edu/~boucbe01/cs360_s18/crimeTest/changePassword.html \n"; // update link to changePassword
-	$result  = mail($to, $subject, $content);
 ?>
 
 <HTML>
@@ -60,8 +73,6 @@
 
 	<BODY>
 		<!--informs user that the process went through -->
-		<H2>Here is your password.  </H2> <?php echo $password?>
-		<P>Your name: <?php echo $name;  ?></P>
-		<P>Your mail: <?php echo $email; ?></P>
+		<P>An email has been sent. <br />Please follow the instruction in the email to reset your password.</P>
 	</BODY>
 </HTML>
